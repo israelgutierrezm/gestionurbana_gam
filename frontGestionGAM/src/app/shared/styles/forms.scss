@@ -1,0 +1,19 @@
+.form-group{
+    margin-bottom: 0px;
+   }
+   .inputError{
+       color: #dc3545;
+       text-align: left !important;
+   }
+   .ng-invalid.ng-touched{
+       border-color:  #dc3545; 
+   }
+   .ng-valid.ng-touched{
+       border-color: green; 
+   }
+   label{
+       margin-top: 4px;
+       font-weight: 700;
+   }
+   
+   

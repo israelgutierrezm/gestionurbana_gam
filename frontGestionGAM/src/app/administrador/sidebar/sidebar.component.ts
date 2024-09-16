@@ -1,0 +1,84 @@
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean
+}
+
+@Component({
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
+})
+export class SidebarComponent implements OnInit {
+  @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter()
+
+  collapsed: boolean = false;
+  screenWidth: number = 0;
+  navData: Array<any>;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any){
+    this.screenWidth = window.innerWidth;
+    if(this.screenWidth <= 768){
+      this.collapsed = false;
+      this.onToggleSideNav.emit({collapsed:this.collapsed, screenWidth: this.screenWidth})
+    }
+  }
+
+  constructor() {
+    this.screenWidth = window.innerWidth;
+    this.navData = [{
+      routeLink: 'dashboard',
+      icon: 'fa fa-home',
+      label: 'Inicio'
+    },
+    {
+      routeLink: 'personal',
+      icon: 'fa fa-users',
+      label: 'Personal'
+    },
+    {
+      routeLink: 'actividades',
+      icon: 'fa fa-list-ol',
+      label: 'Actividades'
+    },
+    {
+      routeLink: 'inventario',
+      icon: 'fa-solid fa-box',
+      label: 'Inventario'
+    },
+    {
+      routeLink: 'reportes',
+      icon: 'fa-solid fa-chart-simple',
+      label: 'Reportes',
+    },
+    {
+      routeLink: '',
+      icon: 'fa fa-sign-out',
+      label: 'Cerrar sesión',
+      isLogout: '1'
+    },
+  ]
+  }
+
+  ngOnInit(): void {
+    // this.muestraItems
+  }
+
+  toggleCollapse(): void {
+    this.collapsed = !this.collapsed
+    this.onToggleSideNav.emit({collapsed:this.collapsed, screenWidth: this.screenWidth})
+  }
+
+  closeSidenav(): void {
+    this.collapsed = false
+    this.onToggleSideNav.emit({collapsed:this.collapsed, screenWidth: this.screenWidth})
+  }
+
+  cerrarSesion(){
+    console.log('Sesión cerrada');
+    
+  }
+}

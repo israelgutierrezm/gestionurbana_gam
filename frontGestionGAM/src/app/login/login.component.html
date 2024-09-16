@@ -1,0 +1,24 @@
+<div class="bg">
+    <div class="login-card">
+        <h2>¡Bienvenid@!</h2>
+        <h3>Portal de gestión urbana</h3>
+        <form [formGroup]="loginForm" class="login-form" (submit)="enviarInformacion()">
+            <div class="form-group">
+                <label for="correo">Usuario</label>
+                <input formControlName="correo" type="email" class="form-control" id="correo" placeholder="Correo">
+                <span class="inputError"
+                    *ngIf="loginFormControls['correo'].invalid && loginFormControls['correo'].touched">Verifica tu usuario</span>
+            </div>
+            <div class="form-group">
+                <label for="pass">Contraseña</label>
+                <input formControlName="pass" type="password" class="form-control" id="pass" placeholder="Contraseña">
+                <span class="inputError"
+                    *ngIf="loginFormControls['pass'].invalid && loginFormControls['pass'].touched">Verifica tu contraseña</span>
+            </div>
+            <a href="#">¿Olvidaste tu contraseña?</a>
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-secondary mt-3">Ingresa</button>
+            </div>
+        </form>
+    </div>
+</div>
