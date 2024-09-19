@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastService } from '../toast/toast.service';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private _toast: ToastService,
+    private _loginService: LoginService
   ) {
     this.loginForm = this.formBuilder.group({
       correo: ['', Validators.required],
@@ -33,6 +37,8 @@ export class LoginComponent implements OnInit {
       });
       return;
     }
+    this._toast.show('Inicio de sesión exitoso',{ classname: 'bg-success text-light' });
+    // this._toast.show('Verifica tu usuario y contraseña',{ classname: 'bg-danger text-light' });
     this.router.navigate(['admin']);
   }
 }

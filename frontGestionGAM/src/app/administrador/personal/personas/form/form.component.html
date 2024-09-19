@@ -7,6 +7,18 @@
 </div>
 <form [formGroup]="personaForm" (submit)="enviarInformacion()">
     <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Rol</label>
+                <select formControlName="rol" class="form-control">
+                    <option hidden value="" disabled selected>Selecciona una opción</option>
+                    <option [value]="1">Administrador</option>
+                </select>
+                <span class="inputError"
+                    *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona una opción
+                </span>
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
@@ -80,14 +92,7 @@
                 <label class="control-label">Tipo de sangre</label>
                 <select formControlName="tipoSangre" class="form-control">
                     <option hidden value="" disabled selected>Selecciona una opción</option>
-                    <option [value]="'A+'">A+</option>
-                    <option [value]="'A-'">A-</option>
-                    <option [value]="'B+'">B+</option>
-                    <option [value]="'B-'">B-</option>
-                    <option [value]="'AB+'">AB+</option>
-                    <option [value]="'AB-'">AB-</option>
-                    <option [value]="'O+'">O+</option>
-                    <option [value]="'O-'">O-</option>
+                    <option [value]="tipo.cat_tipo_sangre_id" *ngFor="let tipo of tiposSangre">{{tipo.tipo_sangre}}</option>
                 </select>
                 <span class="inputError"
                     *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona una opción
