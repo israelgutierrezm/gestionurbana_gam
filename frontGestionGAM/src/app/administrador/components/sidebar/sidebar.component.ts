@@ -19,18 +19,18 @@ export class SidebarComponent implements OnInit {
   navData: Array<any>;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any){
+  onResize(event: any) {
     this.screenWidth = window.innerWidth;
-    if(this.screenWidth <= 768){
+    if (this.screenWidth <= 768) {
       this.collapsed = false;
-      this.onToggleSideNav.emit({collapsed:this.collapsed, screenWidth: this.screenWidth})
+      this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth })
     }
   }
 
   constructor() {
     this.screenWidth = window.innerWidth;
     this.navData = [{
-      routeLink: 'dashboard',
+      routeLink: 'home',
       icon: 'fa fa-home',
       label: 'Inicio'
     },
@@ -41,13 +41,14 @@ export class SidebarComponent implements OnInit {
     },
     {
       routeLink: 'actividades',
-      icon: 'fa fa-list-ol',
+      icon: 'fa-solid fa-people-carry-box',
+      // icon: 'fa-solid fa-person-digging',
       label: 'Actividades'
     },
     {
       routeLink: 'inventario',
-      icon: 'fa-solid fa-box',
-      label: 'Inventario'
+      icon: 'fa-solid fa-screwdriver-wrench',
+      label: 'Herramientas'
     },
     {
       routeLink: 'reportes',
@@ -60,8 +61,9 @@ export class SidebarComponent implements OnInit {
       label: 'Cerrar sesión',
       isLogout: '1'
     },
-  ]
+    ]
   }
+
 
   ngOnInit(): void {
     // this.muestraItems
@@ -69,16 +71,16 @@ export class SidebarComponent implements OnInit {
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed
-    this.onToggleSideNav.emit({collapsed:this.collapsed, screenWidth: this.screenWidth})
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth })
   }
 
   closeSidenav(): void {
     this.collapsed = false
-    this.onToggleSideNav.emit({collapsed:this.collapsed, screenWidth: this.screenWidth})
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth })
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     console.log('Sesión cerrada');
-    
+
   }
 }

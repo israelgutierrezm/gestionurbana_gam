@@ -1,3 +1,7 @@
+.sidenav::-webkit-scrollbar {
+  display: none;
+}
+
 .sidenav{
     // background: #263238; 
     background: #752237; 
@@ -8,6 +12,9 @@
     width: 5rem;
     height: 100vh;
     box-shadow: 0.063rem 0 .9rem 0 #8690a3 ;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge */
    }
    
    .logo-container{

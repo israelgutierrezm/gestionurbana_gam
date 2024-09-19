@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col col-md-12">
+        <strong>
+            <h4>Agregar nueva persona</h4>
+        </strong>
+    </div>
+</div>
+<form [formGroup]="personaForm" (submit)="enviarInformacion()">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+                <span class="inputError"
+                    *ngIf="personaFormControls['nombre'].invalid && personaFormControls['nombre'].touched">Ingresa
+                    un
+                    nombre</span>
+            </div>
+            <div class="form-group">
+                <label for="apellidoPaterno">Apellido paterno</label>
+                <input formControlName="apellidoPaterno" type="text" class="form-control" id="apellidoPaterno"
+                    placeholder="Apellido paterno">
+                <span class="inputError"
+                    *ngIf="personaFormControls['apellidoPaterno'].invalid && personaFormControls['apellidoPaterno'].touched">Ingresa
+                    un apellido</span>
+            </div>
+            <div class="form-group">
+                <label for="apellidoMaterno">Apellido materno</label>
+                <input formControlName="apellidoMaterno" type="text" class="form-control" id="apellidoMaterno"
+                    placeholder="Apellido materno">
+                <span class="inputError"
+                    *ngIf="personaFormControls['apellidoMaterno'].invalid && personaFormControls['apellidoMaterno'].touched">Ingresa
+                    un apellido</span>
+            </div>
+            <div class="form-group">
+                <label for="curp">CURP</label>
+                <input formControlName="curp" type="text" class="form-control" id="curp" placeholder="CURP"
+                    onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
+                    (change)="getSexo()">
+                <span class="inputError"
+                    *ngIf="personaFormControls['curp'].invalid && personaFormControls['curp'].touched">Ingresa
+                    una CURP válida</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sexo</label>
+                <select formControlName="sexo" class="form-control">
+                    <option hidden value="" disabled selected>Selecciona una opción</option>
+                    <option [value]="'H'">Hombre</option>
+                    <option [value]="'M'">Mujer</option>
+                </select>
+                <span class="inputError"
+                    *ngIf="personaFormControls['sexo'].invalid && personaFormControls['sexo'].touched"> Selecciona una opción
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="numeroTelefono">Número de teléfono</label>
+                <input formControlName="numeroTelefono" type="number" class="form-control" id="numeroTelefono"
+                    placeholder="Número de teléfono">
+                <span class="inputError"
+                    *ngIf="personaFormControls['numeroTelefono'].invalid && personaFormControls['numeroTelefono'].touched">Ingresa
+                    un número de teléfono</span>
+            </div>
+            <div class="form-group">
+                <label for="enfermedades">Enfermedades</label>
+                <input formControlName="enfermedades" type="text" class="form-control" id="enfermedades"
+                    placeholder="Enfermedades">
+            </div>
+            <div class="form-group">
+                <label for="alergias">Alergias</label>
+                <input formControlName="alergias" type="text" class="form-control" id="alergias" placeholder="Alergias">
+            </div>
+            <div class="form-group">
+                <label for="medicamentos">Medicamentos</label>
+                <input formControlName="medicamentos" type="text" class="form-control" id="medicamentos"
+                    placeholder="Medicamentos">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tipo de sangre</label>
+                <select formControlName="tipoSangre" class="form-control">
+                    <option hidden value="" disabled selected>Selecciona una opción</option>
+                    <option [value]="'A+'">A+</option>
+                    <option [value]="'A-'">A-</option>
+                    <option [value]="'B+'">B+</option>
+                    <option [value]="'B-'">B-</option>
+                    <option [value]="'AB+'">AB+</option>
+                    <option [value]="'AB-'">AB-</option>
+                    <option [value]="'O+'">O+</option>
+                    <option [value]="'O-'">O-</option>
+                </select>
+                <span class="inputError"
+                    *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona una opción
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-header text-center">
+            Contacto de emergencia
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nombreContacto">Nombre</label>
+                        <input formControlName="nombreContacto" type="text" class="form-control" id="nombreContacto"
+                            placeholder="Nombre">
+                        <span class="inputError"
+                            *ngIf="personaFormControls['nombreContacto'].invalid && personaFormControls['nombreContacto'].touched">Ingresa
+                            un nombre</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="numeroContacto">Número de teléfono</label>
+                        <input formControlName="numeroContacto" type="number" class="form-control" id="numeroContacto"
+                            placeholder="Número de teléfono">
+                        <span class="inputError"
+                            *ngIf="personaFormControls['numeroContacto'].invalid && personaFormControls['numeroContacto'].touched">Ingresa
+                            un número de teléfono</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="parentescoContacto">Parentesco</label>
+                        <input formControlName="parentescoContacto" type="text" class="form-control"
+                            id="parentescoContacto" placeholder="Parentesco">
+                        <span class="inputError"
+                            *ngIf="personaFormControls['parentescoContacto'].invalid && personaFormControls['parentescoContacto'].touched">Ingresa un parentesco</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success mt-3 float-end"><i class="fa-solid fa-floppy-disk"></i> Guardar información</button>
+</form>

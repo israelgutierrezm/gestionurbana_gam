@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 import { AdministradorComponent } from './administrador.component';
 
 const routes: Routes = [
@@ -8,8 +8,10 @@ const routes: Routes = [
       path: '', component: AdministradorComponent,
       children: [
         { path: '', redirectTo: 'home', pathMatch: 'full' },
-        { path: 'home', component: DashboardComponent },
-        // { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule)},
+        { path: 'home', component: HomeComponent },
+        { path: 'personal', loadChildren: () => import('./personal/personal.module').then(m => m.PersonalModule)},
+        { path: 'actividades', loadChildren: () => import('./actividades/actividades.module').then(m => m.ActividadesModule)},
+        { path: 'inventario', loadChildren: () => import('./inventario/inventario.module').then(m => m.InventarioModule)},
         { path: '**', redirectTo: 'home', pathMatch: 'full' },
       ]
   }
