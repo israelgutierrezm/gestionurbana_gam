@@ -4,10 +4,14 @@
 [delay]="toast.delay || 2500"
 (hidden)="toastService.remove(toast)"
 [class]="toast.classname"
+class="text-light text-center"
 >
 <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
   <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
 </ng-template>
 
-<ng-template #text>{{ toast.textOrTpl }}</ng-template>
+<ng-template #text>
+  <i *ngIf="toast.classname == 'bg-success'" class="fa-regular fa-circle-check fa-lg"></i> 
+  <i *ngIf="toast.classname == 'bg-danger'" class="fa fa-exclamation-triangle fa-lg"></i>  {{ toast.textOrTpl }}
+</ng-template>
 </ngb-toast>

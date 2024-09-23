@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogosService } from 'src/app/catalogosServices/catalogos.service';
-import { ToastService } from 'src/app/toast/toast.service';
+import { ToastService } from 'src/app/extras/toast/toast.service';
 import { PersonalService } from '../../services/personal.service';
 import { UsuarioForm } from './form-personas.model';
 
@@ -151,10 +151,10 @@ export class FormComponent implements OnInit {
     this._personalService.guardaPersona(this.personaForm, this.usuarioId).subscribe({
       next: (response: any) => {
         if(response && response['estatus']){
-          this._toast.show(response['msg'], { classname: 'bg-success text-light' });
+          this._toast.show(response['msg'], { classname: 'bg-success' });
           this.router.navigate(['/admin/personal/consulta']);
         }else{
-          this._toast.show(response['msg'], { classname: 'bg-danger text-light' });
+          this._toast.show(response['msg'], { classname: 'bg-danger' });
         }
       }
     });

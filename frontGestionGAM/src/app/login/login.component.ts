@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastService } from '../toast/toast.service';
+import { ToastService } from '../extras/toast/toast.service';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -37,8 +37,7 @@ export class LoginComponent implements OnInit {
       });
       return;
     }
-    this._toast.show('Inicio de sesión exitoso',{ classname: 'bg-success text-light' });
-    // this._toast.show('Verifica tu usuario y contraseña',{ classname: 'bg-danger text-light' });
+    this._toast.show('Inicio de sesión exitoso',{ classname: 'bg-success' });
     this.router.navigate(['admin']);
   }
 }

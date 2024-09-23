@@ -48,4 +48,10 @@ export class PersonalService {
     return this._httpClient.post(this.url + 'administrador/personas/creaPersona.php', formData);
   }
 
+  eliminaUsuario(usuarioId:string){
+    let formData: FormData = new FormData();
+    formData.append('usuarioId', usuarioId);
+    return this._httpClient.post(this.url + 'administrador/personas/eliminaPersona.php', formData);
+  }
+
 }

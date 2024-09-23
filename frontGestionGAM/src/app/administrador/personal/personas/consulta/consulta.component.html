@@ -35,10 +35,10 @@
                         <button class="btn btn-primary" [routerLink]="['../editar/'+ persona.usuario_id]"><i class="fa-solid fa-user-pen" aria-hidden="true"></i></button>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i></button>
+                        <button class="btn btn-danger" (click)="alertEliminaPersona(i, persona.usuario_id)"><i class="fa-solid fa-user-xmark"></i></button>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-info text-white" [routerLink]="['../info/'+persona.persona_id]"><i class="fa-solid fa-circle-info"></i></button>
+                        <button class="btn btn-info text-white" [routerLink]="['../info/'+ persona.usuario_id]"><i class="fa-solid fa-circle-info"></i></button>
                     </td>
                 </tr>
             </tbody>
