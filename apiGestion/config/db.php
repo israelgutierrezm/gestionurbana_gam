@@ -96,13 +96,16 @@ function inserta($tabla, $cols, $values)
 
 }
 
-function inserta_last_id($tabla, $cols, $values)
+function inserta_last_id($tabla, $cols, $values,$show = 0)
 {
     global $connection;
     if (empty($connection)) {
         conecta(3);
     }
     $ins = "insert into $tabla ($cols) values ($values);";
+    if($show === 1){
+        echo $ins;
+    }
     mysqli_query($connection, $ins) or die(mysqli_error($connection));
     $last_id = mysqli_insert_id($connection);
     return $last_id;

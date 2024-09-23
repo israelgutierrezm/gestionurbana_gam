@@ -7,19 +7,18 @@
 </div>
 <form [formGroup]="personaForm" (submit)="enviarInformacion()">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label">Rol</label>
                 <select formControlName="rol" class="form-control">
                     <option hidden value="" disabled selected>Selecciona una opción</option>
-                    <option [value]="1">Administrador</option>
+                    <option [value]="rol.cat_rol_id" *ngFor="let rol of arregloRoles">{{rol.rol}}</option>
                 </select>
                 <span class="inputError"
-                    *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona una opción
+                    *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona
+                    una opción
                 </span>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
@@ -53,19 +52,29 @@
                     *ngIf="personaFormControls['curp'].invalid && personaFormControls['curp'].touched">Ingresa
                     una CURP válida</span>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label">Sexo</label>
                 <select formControlName="sexo" class="form-control">
                     <option hidden value="" disabled selected>Selecciona una opción</option>
-                    <option [value]="'H'">Hombre</option>
-                    <option [value]="'M'">Mujer</option>
+                    <option [value]="genero.cat_genero_id" *ngFor="let genero of arregloGeneros">{{genero.genero}}
+                    </option>
+                    <!-- <option [value]="'M'">Mujer</option> -->
                 </select>
                 <span class="inputError"
-                    *ngIf="personaFormControls['sexo'].invalid && personaFormControls['sexo'].touched"> Selecciona una opción
+                    *ngIf="personaFormControls['sexo'].invalid && personaFormControls['sexo'].touched"> Selecciona una
+                    opción
                 </span>
             </div>
-        </div>
-        <div class="col-md-6">
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input formControlName="fechaNacimiento" type="date" class="form-control" id="fechaNacimiento"
+                    placeholder="Fecha de nacimiento">
+                <span class="inputError"
+                    *ngIf="personaFormControls['fechaNacimiento'].invalid && personaFormControls['fechaNacimiento'].touched">Ingresa
+                    una fecha de nacimiento</span>
+            </div>
             <div class="form-group">
                 <label for="numeroTelefono">Número de teléfono</label>
                 <input formControlName="numeroTelefono" type="number" class="form-control" id="numeroTelefono"
@@ -75,34 +84,66 @@
                     un número de teléfono</span>
             </div>
             <div class="form-group">
-                <label for="enfermedades">Enfermedades</label>
-                <input formControlName="enfermedades" type="text" class="form-control" id="enfermedades"
-                    placeholder="Enfermedades">
+                <label for="numeroCelular">Número de celular</label>
+                <input formControlName="numeroCelular" type="number" class="form-control" id="numeroCelular"
+                    placeholder="Número de celular">
+                <!-- <span class="inputError"
+                    *ngIf="personaFormControls['numeroCelular'].invalid && personaFormControls['numeroCelular'].touched">Ingresa
+                    un número de celular</span> -->
             </div>
             <div class="form-group">
-                <label for="alergias">Alergias</label>
-                <input formControlName="alergias" type="text" class="form-control" id="alergias" placeholder="Alergias">
-            </div>
-            <div class="form-group">
-                <label for="medicamentos">Medicamentos</label>
-                <input formControlName="medicamentos" type="text" class="form-control" id="medicamentos"
-                    placeholder="Medicamentos">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Tipo de sangre</label>
-                <select formControlName="tipoSangre" class="form-control">
-                    <option hidden value="" disabled selected>Selecciona una opción</option>
-                    <option [value]="tipo.cat_tipo_sangre_id" *ngFor="let tipo of tiposSangre">{{tipo.tipo_sangre}}</option>
-                </select>
+                <label for="email">Correo electrónico</label>
+                <input formControlName="email" type="email" class="form-control" id="email"
+                    placeholder="Correo electrónico">
                 <span class="inputError"
-                    *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona una opción
-                </span>
+                    *ngIf="personaFormControls['email'].invalid && personaFormControls['email'].touched">Ingresa
+                    un correo electrónico válido</span>
             </div>
         </div>
     </div>
     <div class="card mt-3">
         <div class="card-header text-center">
-            Contacto de emergencia
+            <strong>Datos médicos</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="enfermedades">Enfermedades</label>
+                        <input formControlName="enfermedades" type="text" class="form-control" id="enfermedades"
+                            placeholder="Enfermedades">
+                    </div>
+                    <div class="form-group">
+                        <label for="alergias">Alergias</label>
+                        <input formControlName="alergias" type="text" class="form-control" id="alergias"
+                            placeholder="Alergias">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="medicamentos">Medicamentos</label>
+                        <input formControlName="medicamentos" type="text" class="form-control" id="medicamentos"
+                            placeholder="Medicamentos">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Tipo de sangre</label>
+                        <select formControlName="tipoSangre" class="form-control">
+                            <option hidden value="" disabled selected>Selecciona una opción</option>
+                            <option [value]="tipo.cat_tipo_sangre_id" *ngFor="let tipo of tiposSangre">
+                                {{tipo.tipo_sangre}}</option>
+                        </select>
+                        <span class="inputError"
+                            *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona
+                            una opción
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-header text-center">
+            <strong>Contacto de emergencia</strong>
         </div>
         <div class="card-body">
             <div class="row">
@@ -116,6 +157,16 @@
                             un nombre</span>
                     </div>
                     <div class="form-group">
+                        <label for="apellidoContacto">Apellido</label>
+                        <input formControlName="apellidoContacto" type="text" class="form-control" id="apellidoContacto"
+                            placeholder="Apellido">
+                        <span class="inputError"
+                            *ngIf="personaFormControls['apellidoContacto'].invalid && personaFormControls['apellidoContacto'].touched">Ingresa
+                            un apellido</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label for="numeroContacto">Número de teléfono</label>
                         <input formControlName="numeroContacto" type="number" class="form-control" id="numeroContacto"
                             placeholder="Número de teléfono">
@@ -123,18 +174,18 @@
                             *ngIf="personaFormControls['numeroContacto'].invalid && personaFormControls['numeroContacto'].touched">Ingresa
                             un número de teléfono</span>
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="parentescoContacto">Parentesco</label>
                         <input formControlName="parentescoContacto" type="text" class="form-control"
                             id="parentescoContacto" placeholder="Parentesco">
                         <span class="inputError"
-                            *ngIf="personaFormControls['parentescoContacto'].invalid && personaFormControls['parentescoContacto'].touched">Ingresa un parentesco</span>
+                            *ngIf="personaFormControls['parentescoContacto'].invalid && personaFormControls['parentescoContacto'].touched">Ingresa
+                            un parentesco</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-success mt-3 float-end"><i class="fa-solid fa-floppy-disk"></i> Guardar información</button>
+    <button type="submit" class="btn btn-success mt-3 float-end"><i class="fa-solid fa-floppy-disk"></i> Guardar
+        información</button>
 </form>

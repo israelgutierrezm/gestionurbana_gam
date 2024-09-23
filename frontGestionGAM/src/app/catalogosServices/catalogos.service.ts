@@ -14,4 +14,12 @@ export class CatalogosService {
     return this._httpClient.get(this.url +'catalogos/catTipoSangre.php');
   }
 
+  getCatalogoRoles(){
+    return this._httpClient.get(this.url +'catalogos/catRoles.php');
+  }
+
+  getCatalogoGeneros(){
+    return this._httpClient.get(this.url +'catalogos/catGeneros.php');
+  }
+
 }
