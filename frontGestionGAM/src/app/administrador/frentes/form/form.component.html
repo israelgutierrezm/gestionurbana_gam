@@ -1,0 +1,31 @@
+<form [formGroup]="frenteForm">
+    <div class="mb-3">
+      <label for="direccionTerritorial" class="form-label">Dirección Territorial</label>
+      <input formControlName="cat_direccion_territorial_id" type="text" class="form-control" id="direccionTerritorial">
+    </div>
+    <div class="mb-3">
+      <label for="colonia" class="form-label">Colonia</label>
+      <input formControlName="cat_colonia_id" type="text" class="form-control" id="colonia">
+    </div>
+    <div class="mb-3">
+      <label for="tipoEspacio" class="form-label">Tipo de Espacio Público</label>
+      <input formControlName="cat_tipo_espacio_publico_id" type="text" class="form-control" id="tipoEspacio">
+    </div>
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input formControlName="nombre" type="text" class="form-control" id="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="area" class="form-label">Área</label>
+      <input formControlName="area" type="number" step="10" class="form-control" id="area">
+    </div>
+    <div class="mb-3">
+      <label for="diasJornada" class="form-label">Días de Jornada</label>
+      <input formControlName="dias_jornada" type="number" class="form-control" id="diasJornada">
+    </div>
+    <div class="mb-3">
+      <label for="personalNecesario" class="form-label">Personal Necesario</label>
+      <input formControlName="personal_necesario" type="number" class="form-control" id="personalNecesario">
+    </div>
+  </form>
+  

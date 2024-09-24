@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ReactiveFormsModule } from '@angular/forms';  
 import { FrentesRoutingModule } from './frentes-routing.module';
-import { FrentesComponent } from './frentes.component';
 import { ConsultaComponent } from './consulta/consulta.component';
+import { FormComponent } from './form/form.component';
 
 
 @NgModule({
   declarations: [
-    FrentesComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    FormComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FrentesRoutingModule
+  ],
+  exports: [
+    FormComponent  
   ]
 })
 export class FrentesModule { }
