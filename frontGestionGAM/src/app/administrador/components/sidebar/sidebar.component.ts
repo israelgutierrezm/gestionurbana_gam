@@ -37,12 +37,16 @@ export class SidebarComponent implements OnInit {
     {
       routeLink: 'personal',
       icon: 'fa fa-users',
-      label: 'Personal'
+      label: 'Usuarios'
+    },
+    {
+      routeLink: 'frentes',
+      icon: 'fa-solid fa-person-digging',
+      label: 'Frentes'
     },
     {
       routeLink: 'actividades',
       icon: 'fa-solid fa-people-carry-box',
-      // icon: 'fa-solid fa-person-digging',
       label: 'Actividades'
     },
     {

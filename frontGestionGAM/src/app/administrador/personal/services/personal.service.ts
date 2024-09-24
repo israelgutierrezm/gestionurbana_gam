@@ -24,6 +24,7 @@ export class PersonalService {
   guardaPersona(form:FormGroup, usuarioId: string | null){
     let formData: FormData = new FormData();
     formData.append('rolId', form.get('rol')?.value);
+    formData.append('matricula', form.get('matricula')?.value);
     formData.append('nombre', form.get('nombre')?.value);
     formData.append('apellidoPaterno', form.get('apellidoPaterno')?.value);
     formData.append('apellidoMaterno', form.get('apellidoMaterno')?.value);
@@ -44,8 +45,9 @@ export class PersonalService {
     if(usuarioId){
       formData.append('usuarioId', usuarioId);
       return this._httpClient.post(this.url + 'administrador/personas/editaPersona.php', formData);
+    }else{
+      return this._httpClient.post(this.url + 'administrador/personas/creaPersona.php', formData);
     }
-    return this._httpClient.post(this.url + 'administrador/personas/creaPersona.php', formData);
   }
 
   eliminaUsuario(usuarioId:string){

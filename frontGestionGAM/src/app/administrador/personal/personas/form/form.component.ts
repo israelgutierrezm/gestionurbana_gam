@@ -19,8 +19,9 @@ export class FormComponent implements OnInit {
   arregloRoles: Array<any> = [];
   arregloGeneros: Array<any> = [];
   usuarioId: string | null;
-
   usuarioList: UsuarioForm | null = null;
+  title: string = '';
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,9 +57,18 @@ export class FormComponent implements OnInit {
   get personaFormControls() { return this.personaForm.controls; }
 
   ngOnInit() {
+    const url = this.router.url;
+
+    if (url.includes('/editar')) {
+      this.title = 'Editar usuario';
+    } else if (url.includes('/crea')) {
+      this.title = 'Agregar nuevo usuario';
+    }
+
     if(this.usuarioId){
       this.consultaUsuarioForm();
     }
+
     this.consultaCatTipoSangre();
     this.consultaRoles();
     this.consultaGeneros();
