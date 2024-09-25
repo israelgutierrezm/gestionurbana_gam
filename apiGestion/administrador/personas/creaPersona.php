@@ -94,6 +94,24 @@ function insertaUsuario(
     1');
     if ($usuarioId) {
         $insertaUsuarioRol = inserta('usuario_rol','usuario_id, cat_rol_id, estatus',''.$usuarioId.', '.$rolId.',1'); 
+        if($rolId == 1)
+        $insertaTrabajador = inserta(
+            'tr_administrador', 
+            'usuario_id, clave_administrador, estatus', 
+            $usuarioId . ', "A' . $usuarioId . '", 1'
+        );  
+        if($rolId == 2)
+            $insertaTrabajador = inserta(
+                'tr_trabajador', 
+                'usuario_id, clave_trabajador, estatus', 
+                $usuarioId . ', "T' . $usuarioId . '", 1'
+            );   
+        if($rolId == 3)     
+            $insertaTrabajador = inserta(
+                'tr_supervisor', 
+                'usuario_id, clave_supervisor, estatus', 
+                $usuarioId . ', "S' . $usuarioId . '", 1'
+            );   
         $responseInsertaDatosMedicos = insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos, $tipoSangre);
         if ($responseInsertaDatosMedicos) {
             $responseInsertaDatosEmergencia = insertaDatosEmergencia($usuarioId, $nombreContacto, $apellidoContacto, $parentescoContacto, $numeroContacto);

@@ -24,6 +24,7 @@ export class FormComponent implements OnInit {
 
   usuarioList: UsuarioForm | null = null;
 
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -60,17 +61,16 @@ export class FormComponent implements OnInit {
   get personaFormControls() { return this.personaForm.controls; }
 
   ngOnInit() {
-    this.title
+    const url = this.router.url;
+
+    if (url.includes('/editar')) {
+      this.title = 'Editar usuario';
+    } else if (url.includes('/crea')) {
+      this.title = 'Agregar nuevo usuario';
+    }
+
     if(this.usuarioId){
       this.consultaUsuarioForm();
-    }
-    if(this.rolId){
-      const colleccion = new Map();
-      colleccion.set("2", "nuevo trabajador");
-      colleccion.set("4", "nuevo supervisor");
-      this.personaForm.get('rol')?.setValue(this.rolId);
-      this.personaForm.get('rol')?.disable();
-      this.title = 'Agregar ' +  colleccion.get(this.rolId);
     }
 
     this.consultaCatTipoSangre();
