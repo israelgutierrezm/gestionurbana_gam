@@ -5,7 +5,19 @@ class Personas
 {
     public function consultaGeneralPersonas()
     {
-        $queryPersonas = query('SELECT usuario_id, usuario, nombre, CONCAT(ap_pat, " ", ap_mat) AS apellidos, curp from usuario u where estatus = 1');
+        $queryPersonas = query('SELECT usuario_id, usuario, nombre, CONCAT(ap_pat, " ", ap_mat) AS apellidos, curp FROM usuario u WHERE estatus = 1');
+        while ($persona = arreglo($queryPersonas)) {
+            $arregloPersonas[] = $persona;
+        }
+        return $arregloPersonas;
+    }
+
+    public function consultaPersonasRol($rolId)
+    {
+        $queryPersonas = query('SELECT u.usuario_id, u.usuario, u.nombre, CONCAT(u.ap_pat, " ", u.ap_mat) AS apellidos, u.curp, ur.cat_rol_id
+        FROM usuario u
+        JOIN usuario_rol ur On ur.usuario_id = u.usuario_id
+        WHERE u.estatus = 1 AND ur.estatus = 1 AND ur.cat_rol_id ='.$rolId);
         while ($persona = arreglo($queryPersonas)) {
             $arregloPersonas[] = $persona;
         }
@@ -61,11 +73,5 @@ class Personas
             'usuario_id =' . $datosUsuario['usuarioId']
         );
         return $editaUsuario;
-    }
-
-    public function eliminaPersona($usuarioId)
-    {
-        $edita = update('', '', '');
-        return $edita;
     }
 }

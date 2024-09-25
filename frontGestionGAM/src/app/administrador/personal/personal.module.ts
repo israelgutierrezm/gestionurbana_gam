@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { PersonalRoutingModule } from './personal-routing.module';
 import { PersonalComponent } from './personal.component';
-import { ConsultaComponent } from './personas/consulta/consulta.component';
-import { FormComponent } from './personas/form/form.component';
+import { ConsultaComponent } from './usuarios/consulta/consulta.component';
+import { FormComponent } from './usuarios/form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InfoPersonaComponent } from './personas/info-persona/info-persona.component';
+import { InfoPersonaComponent } from './usuarios/info-persona/info-persona.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ConsultaSupervisoresComponent } from './supervisores/consulta-supervisores/consulta-supervisores.component';
+import { ConsultaTrabajadoresComponent } from './trabajadores/consulta-trabajadores/consulta-trabajadores.component';
+import { CredencialTrabajadoresComponent } from './trabajadores/credencial-trabajadores/credencial-trabajadores.component';
 
 
 @NgModule({
@@ -14,7 +18,11 @@ import { InfoPersonaComponent } from './personas/info-persona/info-persona.compo
     PersonalComponent,
     ConsultaComponent,
     FormComponent,
-    InfoPersonaComponent
+    InfoPersonaComponent,
+    DashboardComponent,
+    ConsultaSupervisoresComponent,
+    ConsultaTrabajadoresComponent,
+    CredencialTrabajadoresComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-6">
+        <h4>Consulta de supervisores</h4>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary float-end" [routerLink]="['../crea/4']"><i class="fa-solid fa-user-plus"></i> Agregar supervisor</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="input-group mb-3 mt-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" class="form-control" placeholder="Buscar persona" aria-label="search" aria-describedby="basic-addon1">
+          </div>
+        <p><strong>Total: {{arrayPersonas.length}}</strong></p>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Nombre</th>
+                    <th scope="col" class="text-center">Apellidos</th>
+                    <th scope="col" class="text-center">CURP</th>
+                    <th scope="col" class="text-center">Detalles</th>
+                    <!-- <th scope="col" class="text-center">Credencial</th> -->
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="arrayPersonas.length > 0">
+                <tr *ngFor="let persona of arrayPersonas; let i = index">
+                    <th class="text-center" scope="row">{{i + 1}}</th>
+                    <td>{{persona.nombre}}</td>
+                    <td>{{persona.apellidos}}</td>
+                    <td>{{persona.curp}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-info text-white" [routerLink]="['../info/'+ persona.usuario_id]"><i class="fa-solid fa-circle-info"></i></button>
+                    </td>
+                    <!-- <td class="text-center">
+                        <button class="btn btn-secondary text-white" [routerLink]="['../credencial/'+ persona.usuario_id]"><i class="fa-solid fa-id-card-clip"></i></button>
+                    </td> -->
+                    <td class="text-center">
+                        <button class="btn btn-primary" [routerLink]="['../editar/'+ persona.usuario_id]"><i class="fa-solid fa-user-pen" aria-hidden="true"></i></button>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-danger" (click)="alertEliminaPersona(i, persona.usuario_id)"><i class="fa-solid fa-user-xmark"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="arrayPersonas.length == 0">
+                <tr>
+                    <td colspan="7" class="table-secondary text-center">No se encontró información</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

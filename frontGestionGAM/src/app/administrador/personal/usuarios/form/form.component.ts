@@ -14,11 +14,13 @@ import { UsuarioForm } from './form-personas.model';
 
 
 export class FormComponent implements OnInit {
+  title: string = 'Agregar nueva persona';
   personaForm: FormGroup;
   tiposSangre: Array<any> = [];
   arregloRoles: Array<any> = [];
   arregloGeneros: Array<any> = [];
   usuarioId: string | null;
+  rolId: string | null;
 
   usuarioList: UsuarioForm | null = null;
 
@@ -31,6 +33,8 @@ export class FormComponent implements OnInit {
     private _personalService: PersonalService
   ) {
     this.usuarioId = this.route.snapshot.paramMap.get('usuarioId');
+    this.rolId = this.route.snapshot.paramMap.get('rolId');
+
     this.personaForm = this.formBuilder.group({
       rol: ['', Validators.required],
       nombre: ['', Validators.required],
@@ -56,9 +60,19 @@ export class FormComponent implements OnInit {
   get personaFormControls() { return this.personaForm.controls; }
 
   ngOnInit() {
+    this.title
     if(this.usuarioId){
       this.consultaUsuarioForm();
     }
+    if(this.rolId){
+      const colleccion = new Map();
+      colleccion.set("2", "nuevo trabajador");
+      colleccion.set("4", "nuevo supervisor");
+      this.personaForm.get('rol')?.setValue(this.rolId);
+      this.personaForm.get('rol')?.disable();
+      this.title = 'Agregar ' +  colleccion.get(this.rolId);
+    }
+
     this.consultaCatTipoSangre();
     this.consultaRoles();
     this.consultaGeneros();

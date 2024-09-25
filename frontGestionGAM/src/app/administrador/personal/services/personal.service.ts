@@ -15,6 +15,12 @@ export class PersonalService {
     return this._httpClient.get(this.url + 'administrador/personas/consultaPersonas.php');
   }
 
+  consultaPersonasRol(rolId: string | number){
+    let params = new HttpParams()
+    .set('rolId', rolId || '');
+    return this._httpClient.get(this.url + 'administrador/personas/consultaPersonasRol.php', { params: params });
+  }
+
   consultaEspPersona(usuarioId: string | null){
     let params = new HttpParams()
     .set('usuarioId', usuarioId || '');
