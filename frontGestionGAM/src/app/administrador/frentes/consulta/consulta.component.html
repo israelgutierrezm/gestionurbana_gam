@@ -58,12 +58,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
       </div>
       <div class="modal-body">
-        <app-form [frenteForm]="frenteForm" (submitForm)="enviarInformacion()"></app-form>
+        <app-form [frenteForm]="frenteForm" ></app-form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Cerrar</button>
         <button type="button" class="btn btn-success" (click)="enviarInformacion()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-      </div>
+      
+    </div>
     </div>
   </ng-template>
   

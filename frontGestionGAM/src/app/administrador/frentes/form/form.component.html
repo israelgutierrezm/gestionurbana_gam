@@ -1,31 +1,94 @@
 <form [formGroup]="frenteForm">
-    <div class="mb-3">
-      <label for="direccionTerritorial" class="form-label">Dirección Territorial</label>
-      <input formControlName="cat_direccion_territorial_id" type="text" class="form-control" id="direccionTerritorial">
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label class="form-label">Dirección Territorial</label>
+        <select formControlName="cat_direccion_territorial_id" class="form-control" id="direccionTerritorial"
+          [ngClass]="{'ng-invalid': frenteForm.get('cat_direccion_territorial_id')?.invalid && frenteForm.get('cat_direccion_territorial_id')?.touched}">
+          <option hidden value="" disabled selected>Selecciona una opción</option>
+          <option [value]="direccion.cat_direccion_territorial_id" *ngFor="let direccion of direccionesTerritoriales">
+            {{direccion.direccion_territorial}}
+          </option>
+        </select>        
+        <div *ngIf="frenteForm.get('cat_direccion_territorial_id')?.invalid && frenteForm.get('cat_direccion_territorial_id')?.touched" class="error-message">
+          Debes seleccionar una dirección territorial.
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="colonia" class="form-label">Colonia</label>
-      <input formControlName="cat_colonia_id" type="text" class="form-control" id="colonia">
+
+    <div class="col-6">
+      <div class="form-group">
+        <label for="area" class="form-label">Área (M2)</label>
+        <input formControlName="area" type="number" step="1" class="form-control" id="area"
+          [ngClass]="{'ng-invalid': frenteForm.get('area')?.invalid && frenteForm.get('area')?.touched}">        
+        <div *ngIf="frenteForm.get('area')?.invalid && frenteForm.get('area')?.touched" class="error-message">
+          El área es requerida.
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="tipoEspacio" class="form-label">Tipo de Espacio Público</label>
-      <input formControlName="cat_tipo_espacio_publico_id" type="text" class="form-control" id="tipoEspacio">
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Colonia</label>
+        <select formControlName="cat_colonia_id" class="form-control" id="colonia"
+          [ngClass]="{'ng-invalid': frenteForm.get('cat_colonia_id')?.invalid && frenteForm.get('cat_colonia_id')?.touched}">
+          <option hidden value="" disabled selected>Selecciona una opción</option>
+          <option [value]="coloniaGAM.cat_colonia_id" *ngFor="let coloniaGAM of coloniasGAM">
+            {{coloniaGAM.colonia}}
+          </option>
+        </select>        
+        <div *ngIf="frenteForm.get('cat_colonia_id')?.invalid && frenteForm.get('cat_colonia_id')?.touched" class="error-message">
+          Debes seleccionar una colonia.
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="nombre" class="form-label">Nombre</label>
-      <input formControlName="nombre" type="text" class="form-control" id="nombre">
+
+    <div class="col-12">
+      <div class="form-group">
+        <label for="nombre" class="form-label">Nombre del frente</label>
+        <input formControlName="nombre" type="text" class="form-control" id="nombre"
+          [ngClass]="{'ng-invalid': frenteForm.get('nombre')?.invalid && frenteForm.get('nombre')?.touched}">        
+        <div *ngIf="frenteForm.get('nombre')?.invalid && frenteForm.get('nombre')?.touched" class="error-message">
+          El nombre del frente es obligatorio.
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="area" class="form-label">Área</label>
-      <input formControlName="area" type="number" step="10" class="form-control" id="area">
+
+    <div class="col-6">
+      <div class="form-group">
+        <label for="diasJornada" class="form-label">Días de Jornada</label>
+        <input formControlName="dias_jornada" type="number" step="1" class="form-control" id="diasJornada"
+          [ngClass]="{'ng-invalid': frenteForm.get('dias_jornada')?.invalid && frenteForm.get('dias_jornada')?.touched}">        
+        <div *ngIf="frenteForm.get('dias_jornada')?.invalid && frenteForm.get('dias_jornada')?.touched" class="error-message">
+          Los días de jornada son obligatorios.
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="diasJornada" class="form-label">Días de Jornada</label>
-      <input formControlName="dias_jornada" type="number" class="form-control" id="diasJornada">
+
+    <div class="col-6">
+      <div class="form-group">
+        <label for="personalNecesario" class="form-label">Personal Necesario</label>
+        <input formControlName="personal_necesario" type="number" step="1" class="form-control" id="personalNecesario"
+          [ngClass]="{'ng-invalid': frenteForm.get('personal_necesario')?.invalid && frenteForm.get('personal_necesario')?.touched}">
+        <div *ngIf="frenteForm.get('personal_necesario')?.invalid && frenteForm.get('personal_necesario')?.touched" class="error-message">
+          El personal necesario es obligatorio.
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="personalNecesario" class="form-label">Personal Necesario</label>
-      <input formControlName="personal_necesario" type="number" class="form-control" id="personalNecesario">
+
+    <div class="col-12">
+      <div class="form-group">
+        <label class="form-label">Tipo de Espacio Público</label>
+        <select formControlName="cat_tipo_espacio_frente_id" class="form-control" id="tipoEspacioPublico" multiple
+          [ngClass]="{'ng-invalid': frenteForm.get('cat_tipo_espacio_frente_id')?.invalid && frenteForm.get('cat_tipo_espacio_frente_id')?.touched}">
+          <option [value]="tipo.cat_tipo_espacio_frente_id" *ngFor="let tipo of tiposEspaciosPublicos">
+            {{tipo.tipo_espacio}}
+          </option>
+        </select>        
+        <div *ngIf="frenteForm.get('cat_tipo_espacio_frente_id')?.invalid && frenteForm.get('cat_tipo_espacio_frente_id')?.touched" class="error-message">
+          Debes seleccionar al menos un tipo de espacio público.
+        </div>
+      </div>
     </div>
-  </form>
-  
+  </div>
+</form>
