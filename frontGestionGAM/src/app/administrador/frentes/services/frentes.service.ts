@@ -15,7 +15,7 @@ export class FrentesService {
     return this._httpClient.get(this.url + 'administrador/frentes/consultaFrentes.php');
   }
 
-  guardaFrente(form:FormGroup, frenteId: string | null){
+  guardaFrente(form:FormGroup, frenteId:string | null){
 
     let formData: FormData = new FormData();
     formData.append('cat_direccion_territorial_id', form.get('cat_direccion_territorial_id')?.value);

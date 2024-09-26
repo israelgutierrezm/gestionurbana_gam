@@ -18,7 +18,7 @@
 
     <div class="col-6">
       <div class="form-group">
-        <label for="area" class="form-label">Área (M2)</label>
+        <label for="area" class="form-label">Área m²</label>
         <input formControlName="area" type="number" step="1" class="form-control" id="area"
           [ngClass]="{'ng-invalid': frenteForm.get('area')?.invalid && frenteForm.get('area')?.touched}">        
         <div *ngIf="frenteForm.get('area')?.invalid && frenteForm.get('area')?.touched" class="error-message">

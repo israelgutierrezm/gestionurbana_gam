@@ -16,6 +16,9 @@ declare var alertify: any;
 export class ConsultaComponent implements OnInit {
   frenteForm: FormGroup;
   arrayFrentes: any[] = []; 
+  bandera_edicion: boolean = false;
+  frenteId: string | null = null;
+
   constructor(
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
@@ -33,39 +36,72 @@ export class ConsultaComponent implements OnInit {
       personal_necesario: ['', Validators.required],
       
     });
+   
   }
 
   ngOnInit() {
     this.consultaFrentes();
   }
 
+
   consultaFrentes(){
     this._frentesService.consultaFrentes().subscribe({
       next: (response: any) => {
         if (response && response['estatus']) {
           this.arrayFrentes = response['frentes'];
+          
         }
       }
     });
   }
 
   openModal(content: any) {
+    this.bandera_edicion = false; 
+    this.frenteId = null; 
     this.frenteForm.reset();
     this.modalService.open(content, { size: 'lg' });
   }
 
   closeModal() {
+    this.bandera_edicion = false; 
+    this.frenteId = null; 
     this.modalService.dismissAll();
   }
 
+  creaArray(cadena: string | null | undefined): string[] {
+    if (!cadena) {
+      return [];
+    }
+    return cadena.split(',').map(valor => valor.trim());
+  }
+  
+
+  openEditModal(content: any, frente: any) {
+    var arrayFrentes: any[] = this.creaArray(frente.tipos_espacios_ids)
+    this.bandera_edicion = true; 
+    this.frenteId = frente.frente_id; 
+    this.frenteForm.patchValue({
+        cat_direccion_territorial_id: frente.cat_direccion_territorial_id,
+        cat_colonia_id: frente.cat_colonia_id,
+        nombre: frente.nombre,
+        area: frente.area,
+        dias_jornada: frente.dias_jornada,
+        personal_necesario: frente.personal_necesario,
+        cat_tipo_espacio_frente_id: arrayFrentes
+    });
+
+    this.modalService.open(content, { size: 'lg' });
+}
+
   enviarInformacion() {
     if (this.frenteForm.valid) {
-      this._frentesService.guardaFrente(this.frenteForm, null).subscribe({
+      this._frentesService.guardaFrente(this.frenteForm, this.frenteId).subscribe({
         next: (response: any) => {
           if(response && response['estatus']){
             this._toast.show(response['msg'], { classname: 'bg-success' });
             this.frenteForm.reset();
             this.modalService.dismissAll();
+            this.consultaFrentes();
           }else{
             this._toast.show(response['msg'], { classname: 'bg-danger' });
           }
