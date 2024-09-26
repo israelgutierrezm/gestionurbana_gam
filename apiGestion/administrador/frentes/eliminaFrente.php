@@ -13,7 +13,7 @@ try {
         //     $jwt  
         // );
 
-        $eliminaFrente = update('tr_frente', 'estatus = 0', 'frente_id='.$frenteId);
+        $eliminaFrente = update($GLOBALS["db_controlTrabajo"].'.tr_frente', 'estatus = 0', 'frente_id='.$frenteId);
 
         if($eliminaFrente){
             $json = array("estatus" => 1, "msg" => "Se eliminó correctamente");

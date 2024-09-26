@@ -6,6 +6,7 @@ import { FrentesService } from '../services/frentes.service';
 import { ToastService } from 'src/app/extras/toast/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+declare var alertify: any;
 
 @Component({
   selector: 'app-consulta',
@@ -14,12 +15,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ConsultaComponent implements OnInit {
   frenteForm: FormGroup;
-
+  arrayFrentes: any[] = []; 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
     private modalService: NgbModal,
-    private router: Router,
     private _toast: ToastService,
     private _frentesService: FrentesService
 
@@ -37,7 +36,17 @@ export class ConsultaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.consultaFrentes();
+  }
 
+  consultaFrentes(){
+    this._frentesService.consultaFrentes().subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.arrayFrentes = response['frentes'];
+        }
+      }
+    });
   }
 
   openModal(content: any) {
@@ -48,9 +57,8 @@ export class ConsultaComponent implements OnInit {
   closeModal() {
     this.modalService.dismissAll();
   }
-  enviarInformacion() {
-    console.log('Tipo de Espacio Público seleccionado:', this.frenteForm.get('cat_tipo_espacio_frente_id')?.value);
 
+  enviarInformacion() {
     if (this.frenteForm.valid) {
       this._frentesService.guardaFrente(this.frenteForm, null).subscribe({
         next: (response: any) => {
@@ -68,7 +76,28 @@ export class ConsultaComponent implements OnInit {
       this.frenteForm.markAllAsTouched();
     
   }
-  
+
+  alertEliminaFrente(indiceFrente: number, frenteId: string) {
+    alertify.confirm('', '¿Deseas eliminar este frente?',
+      () => this.eliminaFrente(indiceFrente, frenteId),
+      () => this.cancelado()
+      ).set('labels', { ok: 'Sí', cancel: 'No' });
+  }
+
+  eliminaFrente(indiceFrente: number, frenteId:string) {
+    this._frentesService.eliminaFrente(frenteId).subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.arrayFrentes.splice(indiceFrente, 1);
+          this._toast.show('Eliminado correctamente', { classname: 'bg-success' });
+        }
+      }
+    });
+  }
+
+  cancelado() {
+    this._toast.show('Cancelado', { classname: 'bg-danger' });
+  }
 }
 
 
