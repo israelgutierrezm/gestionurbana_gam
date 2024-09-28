@@ -19,33 +19,36 @@
                 <tr>
                     <th scope="col" class="text-center">Dirección Territorial</th>
                     <th scope="col" class="text-center">Colonia</th>
-                    <th scope="col" class="text-center">Tipo de Espacio</th>
                     <th scope="col" class="text-center">Nombre</th>
-                    <th scope="col" class="text-center">Área</th>
+                    <th scope="col" class="text-center">Área m²</th>
                     <th scope="col" class="text-center">Días jornada</th>
                     <th scope="col" class="text-center">Personal necesario</th>
                     <th scope="col" class="text-center">Editar</th>
                     <th scope="col" class="text-center">Eliminar</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
-                    <td>Mark</td>
+            <tbody *ngIf="arrayFrentes.length > 0">
+                <tr *ngFor="let frente of arrayFrentes; let i = index">
+                    <td>{{frente.direccion_territorial}}</td>
+                    <td>{{frente.colonia}}</td>
+                    <td>{{frente.nombre}}</td>
+                    <td>{{frente.area}} m²</td>
+                    <td>{{frente.dias_jornada}}</td>
+                    <td>{{frente.personal_necesario}}</td>
                     <td class="text-center">
-                        <button class="btn btn-primary" [routerLink]="['../editar/1']"><i class="fa-solid fa-pen"
-                                aria-hidden="true"></i></button>
+                        <a class="btn btn-primary" (click)="openEditModal(content, frente)"><i class="fa-solid fa-pen" aria-hidden="true"></i></a>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-danger" (click)="alertEliminaFrente(i, frente.frente_id)">
+                            <i class="fas fa-times-circle" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
-
+            </tbody>
+            <tbody *ngIf="arrayFrentes.length == 0">
+                <tr>
+                    <td colspan="8" class="table-secondary text-center">No se encontró información</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -54,16 +57,17 @@
 <ng-template #content let-modal>
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Agregar frente</h5>
+        <h5 class="modal-title">{{ bandera_edicion ? 'Editar frente' : 'Agregar frente' }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
       </div>
       <div class="modal-body">
-        <app-form [frenteForm]="frenteForm" (submitForm)="enviarInformacion()"></app-form>
+        <app-form [frenteForm]="frenteForm" ></app-form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Cerrar</button>
         <button type="button" class="btn btn-success" (click)="enviarInformacion()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
-      </div>
+      
+    </div>
     </div>
   </ng-template>
   

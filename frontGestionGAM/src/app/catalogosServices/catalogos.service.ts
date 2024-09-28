@@ -22,4 +22,16 @@ export class CatalogosService {
     return this._httpClient.get(this.url +'catalogos/catGeneros.php');
   }
 
+  getDireccionesTerritoriales(){
+    return this._httpClient.get(this.url +'catalogos/catDireccionesTerritoriales.php');
+  }
+
+  getTiposEspaciosPublicosDT(){
+    return this._httpClient.get(this.url +'catalogos/catEspaciosPublicosFrentes.php');
+  }
+
+  getColoniasGAM(){
+    return this._httpClient.get(this.url +'catalogos/catColoniasGAM.php');
+  }
+
 }
