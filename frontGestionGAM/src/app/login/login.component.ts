@@ -9,8 +9,9 @@ import { LoginService } from './services/login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
+  // jwt: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -19,25 +20,35 @@ export class LoginComponent implements OnInit {
     private _loginService: LoginService
   ) {
     this.loginForm = this.formBuilder.group({
-      correo: ['', Validators.required],
+      user: ['', Validators.required],
       pass: ['', Validators.required],
     });
   }
 
   get loginFormControls() { return this.loginForm.controls; }
 
-  ngOnInit() {
-
-  }
-
-  enviarInformacion(){
+  log(){
     if (this.loginForm.invalid) {
       Object.keys(this.loginForm.controls).forEach(controlKey => {
         this.loginForm.controls[controlKey].markAsTouched();
       });
       return;
     }
-    this._toast.show('Inicio de sesión exitoso',{ classname: 'bg-success' });
-    this.router.navigate(['admin']);
+    this.validaUserPass();
+  }
+  
+  validaUserPass(){
+    this._loginService._validaUserPass(this.loginForm).subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this._toast.show('Inicio de sesión exitoso',{ classname: 'bg-success' });
+          this.router.navigate(['admin']);
+          localStorage.setItem('jwt',JSON.stringify(response['jwt']));
+          localStorage.setItem('user',JSON.stringify(response['usuario']));
+        }else{
+          this._toast.show(response['msg'],{ classname: 'bg-danger' });
+        }
+      }
+    });
   }
 }

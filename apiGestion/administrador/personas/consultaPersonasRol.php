@@ -8,7 +8,7 @@ try {
         foreach ($_GET as $clave => $valor) {
             ${$clave} = escape_cara($valor);
         }
-        include './class.php/personas.class.php';
+        include './class/personas.class.php';
         $personasClass = new Personas();
         $arregloPersonas = $personasClass->consultaPersonasRol($rolId);
         if(sizeof($arregloPersonas) > 0){

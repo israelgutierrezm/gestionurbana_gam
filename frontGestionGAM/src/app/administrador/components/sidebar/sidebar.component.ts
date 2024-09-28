@@ -1,5 +1,6 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -27,7 +28,9 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  constructor() {
+  constructor(
+    private router: Router,
+  ) {
     this.screenWidth = window.innerWidth;
     this.navData = [{
       routeLink: 'home',
@@ -84,6 +87,7 @@ export class SidebarComponent implements OnInit {
   }
 
   cerrarSesion() {
+    this.router.navigate(['login']);
     console.log('Sesión cerrada');
 
   }

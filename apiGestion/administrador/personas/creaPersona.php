@@ -12,6 +12,7 @@ try {
         // $usuario = Auth::GetData(
         //     $jwt  
         // );
+        
         $respuestaGuardaPersona = insertaUsuario(
             $rolId,
             $nombre,
@@ -23,6 +24,7 @@ try {
             $numeroTelefono,
             $numeroCelular,
             $email,
+            $pass,
             $nombreContacto,
             $apellidoContacto,
             $parentescoContacto,
@@ -54,6 +56,7 @@ function insertaUsuario(
     $numeroTelefono,
     $numeroCelular,
     $email,
+    $pass,
     $nombreContacto,
     $apellidoContacto,
     $parentescoContacto,
@@ -79,7 +82,7 @@ function insertaUsuario(
     fecha_creacion,
     estatus', '
     "' . $email . '",
-    "pass",
+    "'.encriptaPassword($pass).'",
     "' . $nombre . '",
     "' . $apellidoPaterno . '",
     "' . $apellidoMaterno . '",
@@ -161,4 +164,11 @@ function insertaDatosEmergencia($usuarioId, $nombreContacto, $apellidoContacto, 
     } else {
         return array("estatus" => 0, "msg" => "Error al guardar los datos del contacto de emergencia.");
     }
+}
+
+function encriptaPassword($pass){
+    include '../../extras/encriptacion/class/encriptacion.class.php';
+    $encriptacionClass = new Encriptacion();
+    $encriptada = $encriptacionClass->hash($pass);
+    return $encriptada;
 }

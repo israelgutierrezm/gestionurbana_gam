@@ -12,7 +12,7 @@ try {
         // $usuario = Auth::GetData(
         //     $jwt  
         // );
-        include './class.php/personas.class.php';
+        include './class/personas.class.php';
         $personaClass = new Personas();
         $datosUsuario = [
             'usuarioId' => $usuarioId,
