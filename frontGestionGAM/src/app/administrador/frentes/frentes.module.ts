@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FrentesRoutingModule } from './frentes-routing.module';
 import { ConsultaComponent } from './consulta/consulta.component';
 import { FormComponent } from './form/form.component';
+import { FormsModule } from '@angular/forms'; 
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { FormComponent } from './form/form.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     FrentesRoutingModule
   ],

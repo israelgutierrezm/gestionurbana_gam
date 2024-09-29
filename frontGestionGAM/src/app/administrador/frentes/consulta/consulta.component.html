@@ -10,16 +10,17 @@
     <div class="col col-md-12">
         <div class="input-group mb-3 mt-3">
             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-            <input type="text" class="form-control" placeholder="Buscar frente" aria-label="search"
-                aria-describedby="basic-addon1">
-        </div>
+            <input type="text" class="form-control" placeholder="Buscar frente por nombre" aria-label="search"
+                   aria-describedby="basic-addon1" [(ngModel)]="nombreBusqueda" (input)="filtrarFrentes()">
+          </div>
         <p><strong>Total: 10</strong></p>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
+                    <th scope="col" class="text-center">Código QR</th>
+                    <th scope="col" class="text-center">Nombre</th>
                     <th scope="col" class="text-center">Dirección Territorial</th>
                     <th scope="col" class="text-center">Colonia</th>
-                    <th scope="col" class="text-center">Nombre</th>
                     <th scope="col" class="text-center">Área m²</th>
                     <th scope="col" class="text-center">Días jornada</th>
                     <th scope="col" class="text-center">Personal necesario</th>
@@ -27,14 +28,19 @@
                     <th scope="col" class="text-center">Eliminar</th>
                 </tr>
             </thead>
-            <tbody *ngIf="arrayFrentes.length > 0">
-                <tr *ngFor="let frente of arrayFrentes; let i = index">
-                    <td>{{frente.direccion_territorial}}</td>
-                    <td>{{frente.colonia}}</td>
+            <tbody *ngIf="frentesFiltrados.length > 0">
+                <tr *ngFor="let frente of frentesFiltrados; let i = index">
+                    <td class="text-center"> 
+                        <a class="btn btn-info" (click)="openQRModal(contentQR, frente)">
+                            <i class="fa fa-qrcode text-white" aria-hidden="true"></i>
+                        </a>
+                    </td>
                     <td>{{frente.nombre}}</td>
-                    <td>{{frente.area}} m²</td>
-                    <td>{{frente.dias_jornada}}</td>
-                    <td>{{frente.personal_necesario}}</td>
+                    <td class="text-center">{{frente.direccion_territorial}}</td>
+                    <td>{{frente.colonia}}</td>
+                    <td class="text-center">{{frente.area}} m²</td>
+                    <td class="text-center">{{frente.dias_jornada}}</td>
+                    <td class="text-center">{{frente.personal_necesario}}</td>
                     <td class="text-center">
                         <a class="btn btn-primary" (click)="openEditModal(content, frente)"><i class="fa-solid fa-pen" aria-hidden="true"></i></a>
                     </td>
@@ -66,6 +72,23 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Cerrar</button>
         <button type="button" class="btn btn-success" (click)="enviarInformacion()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+      
+    </div>
+    </div>
+  </ng-template>
+
+  <ng-template #contentQR let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">QR del frente: {{nombreFrente}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img *ngIf="qrCode" [src]="qrCode" alt="Código QR" style="height: 200px; width: 200px;" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Cerrar</button>
+        <button type="button" class="btn btn-success" (click)="descargarQR()"><i class="fa-solid fa-download"></i> Descargar QR</button>
       
     </div>
     </div>

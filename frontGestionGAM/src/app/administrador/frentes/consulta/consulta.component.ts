@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FrentesService } from '../services/frentes.service';
 import { ToastService } from 'src/app/extras/toast/toast.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 declare var alertify: any;
 
@@ -18,6 +16,11 @@ export class ConsultaComponent implements OnInit {
   arrayFrentes: any[] = []; 
   bandera_edicion: boolean = false;
   frenteId: string | null = null;
+  nombreFrente: string = ''; 
+  qrCode: string = ''; 
+  frentesFiltrados: any[] = []; 
+  nombreBusqueda: string = ''; 
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,12 +52,34 @@ export class ConsultaComponent implements OnInit {
       next: (response: any) => {
         if (response && response['estatus']) {
           this.arrayFrentes = response['frentes'];
+          this.frentesFiltrados = response['frentes'];
           
         }
       }
     });
   }
 
+  filtrarFrentes() {
+    console.warn(this.nombreBusqueda);
+    if (this.nombreBusqueda) {
+      const nombreBusquedaLower = this.nombreBusqueda.toLowerCase();
+      this.frentesFiltrados = this.arrayFrentes.filter(frente =>
+        frente.nombre.toLowerCase().includes(nombreBusquedaLower)
+      );
+    } else {
+      this.frentesFiltrados = this.arrayFrentes;
+    }
+  }
+
+   descargarQR() {
+
+  }
+  
+  openQRModal(contentModal: any, frente: any) {
+    this.nombreFrente = frente.nombre;
+    this.qrCode = "https://qrcode.tec-it.com/API/QRCode?data=https://estudy.com.mx/1";
+    this.modalService.open(contentModal);
+  }
   openModal(content: any) {
     this.bandera_edicion = false; 
     this.frenteId = null; 
