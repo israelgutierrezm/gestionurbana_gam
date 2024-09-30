@@ -57,8 +57,6 @@
                     *ngIf="personaFormControls['curp'].invalid && personaFormControls['curp'].touched">Ingresa
                     una CURP válida</span>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label">Sexo</label>
                 <select formControlName="sexo" class="form-control">
@@ -72,6 +70,8 @@
                     opción
                 </span>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="fechaNacimiento">Fecha de nacimiento</label>
                 <input formControlName="fechaNacimiento" type="date" class="form-control" id="fechaNacimiento"
@@ -92,9 +92,9 @@
                 <label for="numeroCelular">Número de celular</label>
                 <input formControlName="numeroCelular" type="number" class="form-control" id="numeroCelular"
                     placeholder="Número de celular">
-                <!-- <span class="inputError"
+                <span class="inputError"
                     *ngIf="personaFormControls['numeroCelular'].invalid && personaFormControls['numeroCelular'].touched">Ingresa
-                    un número de celular</span> -->
+                    un número de celular</span>
             </div>
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
@@ -103,6 +103,13 @@
                 <span class="inputError"
                     *ngIf="personaFormControls['email'].invalid && personaFormControls['email'].touched">Ingresa
                     un correo electrónico válido</span>
+            </div>
+            <div class="form-group">
+                <label for="pass">Contraseña</label>
+                <input formControlName="pass" type="pass" class="form-control" id="pass"
+                    placeholder="Contraseña">
+                <span class="inputError"
+                    *ngIf="personaFormControls['pass'].invalid && personaFormControls['pass'].touched">Ingresa una contraseña</span>
             </div>
         </div>
     </div>

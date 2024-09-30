@@ -47,6 +47,7 @@ export class FormComponent implements OnInit {
       numeroTelefono: ['', Validators.required],
       numeroCelular: ['', Validators.required],
       email: ['', Validators.required],
+      pass: ['', Validators.required],
       nombreContacto: ['', Validators.required],
       apellidoContacto: ['', Validators.required],
       parentescoContacto: ['', Validators.required],
@@ -158,6 +159,10 @@ export class FormComponent implements OnInit {
     this.personaForm.get('alergias')?.setValue(this.usuarioList?.alergias ?? '');
     this.personaForm.get('medicamentos')?.setValue(this.usuarioList?.medicamentos ?? '');
     this.personaForm.get('tipoSangre')?.setValue(this.usuarioList?.tipo_sangre);
+    if(this.usuarioId){
+      this.personaForm.get('pass')?.clearValidators();
+      this.personaForm.get('pass')?.updateValueAndValidity();
+    }
   }
 
   enviarInformacion() {

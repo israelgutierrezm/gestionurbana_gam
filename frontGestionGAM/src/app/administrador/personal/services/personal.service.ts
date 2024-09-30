@@ -48,10 +48,14 @@ export class PersonalService {
     formData.append('alergias', form.get('alergias')?.value);
     formData.append('medicamentos', form.get('medicamentos')?.value);
     formData.append('tipoSangre', form.get('tipoSangre')?.value);
+    if(form.get('pass')?.value != ''){
+      formData.append('pass', form.get('pass')?.value);
+    }
     if(usuarioId){
       formData.append('usuarioId', usuarioId);
       return this._httpClient.post(this.url + 'administrador/personas/editaPersona.php', formData);
     }else{
+
       return this._httpClient.post(this.url + 'administrador/personas/creaPersona.php', formData);
     }
   }
