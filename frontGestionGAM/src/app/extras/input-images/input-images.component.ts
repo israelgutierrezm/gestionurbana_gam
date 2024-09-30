@@ -28,10 +28,10 @@ export class InputImagesComponent implements OnChanges {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
 
-      // Validar que sea un archivo de imagen
       const fileType = file.type;
       const validImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-
+      
+      // Valida que sea un archivo de imagen
       if (validImageTypes.includes(fileType)) {
         this.imagen = file;
         this.cargaVistaPreviaImg(file);

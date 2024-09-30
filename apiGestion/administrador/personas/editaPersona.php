@@ -35,7 +35,8 @@ try {
             'medicamentos' => $medicamentos,
             'tipoSangre' => $tipoSangre];
 
-        $editaPersona = $personaClass->editaPersona($datosUsuario);
+        // $editaPersona = $personaClass->editaPersona($datosUsuario);
+        $editaPersona = true;
         guardaImagenPerfil($usuarioId);
         if($editaPersona){
             $json = array("estatus" => 1, "msg" => "Información actualizada correctamente");
@@ -51,21 +52,19 @@ try {
 
 function guardaImagenPerfil($usuarioId){
     include '../../extras/archivo/class/archivo.class.php';
+    $img = $_FILES["imagen"];
     $archivo = new Archivo();
+    $url = 'archivos_usuario/'.$usuarioId.'/imagen_perfil';
     $imagen = $archivo::guardar_archivo_main(
-        'imagen_perfil',
-        $usuarioId,
-        $_FILES["imagen"],//la variable tipo file donde viene el archivo
-        "perfil", //el nombre de la tabla
-        1,
-        null,//tamaño de la extension
-        'archivos_usuario',//carpeta propietario
-        1 //archivo propietario
+        $img,//la variable tipo file donde viene el archivo
+        'perfil',
+        $url
       ); 
-
         
           if($imagen['status'] == 1 ){
-            update('usuarios','url_perfil ="'.$imagen['url'].'"','usuario_id ='.$usuarioId);
+            $basename = basename($img["name"]);
+            $extension = strtolower(pathinfo($basename,PATHINFO_EXTENSION));
+            update('usuario','url_foto ="assets/'.$url.'/perfil.'.$extension.'"','usuario_id ='.$usuarioId);
 
           $json = array("status" => 1, "msg" => "Se inserto la imagen correctamente", "url" => $imagen['url']);
          }else{

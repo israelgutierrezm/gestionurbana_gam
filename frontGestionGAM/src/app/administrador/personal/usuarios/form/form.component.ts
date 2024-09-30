@@ -5,6 +5,7 @@ import { CatalogosService } from 'src/app/catalogosServices/catalogos.service';
 import { ToastService } from 'src/app/extras/toast/toast.service';
 import { PersonalService } from '../../services/personal.service';
 import { UsuarioForm } from './form-personas.model';
+import { GLOBAL } from 'src/app/shared/globals/global';
 
 @Component({
   selector: 'app-form',
@@ -23,6 +24,8 @@ export class FormComponent implements OnInit {
   rolId: string | null;
   imagen: File | null = null;
   usuarioList: UsuarioForm | null = null;
+
+  urlAssets = GLOBAL.urlAssets
 
 
   constructor(

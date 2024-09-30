@@ -102,18 +102,12 @@ class Archivo {
     }
 
     public static function guardar_archivo_main(
-        $ruta, // la ruta del archivo
-        $id_ruta, //el id de la ruta
         $file,//la variable tipo file donde viene el archivo
         $nombre_archivo, //el nombre que va a llevar el archivo a guardar
-        $tipo_archivo, //extensiones (imagen, documentos,*)
-        $tamanio, //tamaño de la extension
-        $ruta_main, //ruta del propietario
-        $id_main//id del propietario
+        $url
         ) {
-
-    
-        $directorio_limpio ='assets/'.$ruta_main.'/'.$id_main.'/'.$ruta.'/'.$id_ruta;
+        $tamanio = null;  //tamaño de la extension
+        $directorio_limpio = 'assets/'.$url;
         $directorio = self::$default_url.$directorio_limpio;
 
         $dirOK = self::carpeta($directorio);
@@ -124,7 +118,7 @@ class Archivo {
 
         //if($nombre_archivo == null ) $nombre_archivo = basename($file["name"]);
 
-        $archivoOK = self::guarda_archivo_servidor($directorio,$file,$nombre_archivo,$tipo_archivo,$tamanio);
+        $archivoOK = self::guarda_archivo_servidor($directorio,$file,$nombre_archivo,'',$tamanio);
         
         if ($archivoOK == 1) {
 
@@ -220,13 +214,13 @@ class Archivo {
                 return 6;
             }*/
 
-            self::$extensiones_disponibles = self::consulta_extension($tipo_formato);
+            // self::$extensiones_disponibles = self::consulta_extension($tipo_formato);
 
-            //FORMATO DE ARCHIVO
-            $formato_valido = self::valida_extension($extension,self::$extensiones_disponibles);
-            if(!$formato_valido){
-                return 8;
-            }
+            // //FORMATO DE ARCHIVO
+            // $formato_valido = self::valida_extension($extension,self::$extensiones_disponibles);
+            // if(!$formato_valido){
+            //     return 8;
+            // }
 
             //TAMAÑO DE ARCHIVO
             $tamanio_valido = self::revisar_tamanio($file["size"],$maxfilesize);
@@ -245,31 +239,31 @@ class Archivo {
 
     }
 
-    public static function consulta_extension($tipo_extension){
-        if($tipo_extension == null) $tipo_extension = 100;
+    // public static function consulta_extension($tipo_extension){
+    //     if($tipo_extension == null) $tipo_extension = 100;
 
-        $query_extension =  query('select * from '.$GLOBALS['db_datosGenerales'].'.cat_formatos where cat_formato_id='.$tipo_extension);
-        if(num($query_extension)){
-            $arreglo_extension=arreglo($query_extension);
-            $extensiones = $arreglo_extension['tipo_extension'];
-        }
-        else 
-            $extensiones = null;
+    //     $query_extension =  query('select * from '.$GLOBALS['db_datosGenerales'].'.cat_formatos where cat_formato_id='.$tipo_extension);
+    //     if(num($query_extension)){
+    //         $arreglo_extension=arreglo($query_extension);
+    //         $extensiones = $arreglo_extension['tipo_extension'];
+    //     }
+    //     else 
+    //         $extensiones = null;
 
-        return $extensiones;
-    }
+    //     return $extensiones;
+    // }
 
-    public static function valida_extension($extension,$extensiones_disponibles){
+    // public static function valida_extension($extension,$extensiones_disponibles){
         
 
-        $formato_real=strpos($extensiones_disponibles, $extension,0);
+    //     $formato_real=strpos($extensiones_disponibles, $extension,0);
 
-        if ($formato_real === false){
-            return 0;
-        }else{
-            return 1;
-        }
-    }
+    //     if ($formato_real === false){
+    //         return 0;
+    //     }else{
+    //         return 1;
+    //     }
+    // }
 
     public static function revisar_tamanio($size,$maxfilesize){
 

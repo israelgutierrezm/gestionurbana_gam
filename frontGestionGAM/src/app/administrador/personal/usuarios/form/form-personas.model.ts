@@ -19,4 +19,5 @@ export interface UsuarioForm {
     alergias: string;
     medicamentos: string;
     condiciones_preexistentes: string;
+    url_foto: string | null
   }
