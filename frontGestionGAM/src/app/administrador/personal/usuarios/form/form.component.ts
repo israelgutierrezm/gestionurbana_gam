@@ -73,6 +73,11 @@ export class FormComponent implements OnInit {
       this.consultaUsuarioForm();
     }
 
+    if(this.rolId){
+      this.personaForm.get('rol')?.setValue(this.rolId);
+      this.personaForm.get('rol')?.disable();
+    }
+
     this.consultaCatTipoSangre();
     this.consultaRoles();
     this.consultaGeneros();
