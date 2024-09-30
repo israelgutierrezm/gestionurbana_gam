@@ -21,7 +21,7 @@ export class FormComponent implements OnInit {
   arregloGeneros: Array<any> = [];
   usuarioId: string | null;
   rolId: string | null;
-
+  imagen: File | null = null;
   usuarioList: UsuarioForm | null = null;
 
 
@@ -133,7 +133,6 @@ export class FormComponent implements OnInit {
       next: (response: any) => {
         if(response && response['estatus']){
           this.usuarioList = response['usuario'];
-          console.log(this.usuarioList);
           this.fillForm();
         }
       }
@@ -172,7 +171,7 @@ export class FormComponent implements OnInit {
       });
       return;
     }
-    this._personalService.guardaPersona(this.personaForm, this.usuarioId).subscribe({
+    this._personalService.guardaPersona(this.personaForm, this.usuarioId, this.imagen).subscribe({
       next: (response: any) => {
         if(response && response['estatus']){
           this._toast.show(response['msg'], { classname: 'bg-success' });
@@ -182,6 +181,10 @@ export class FormComponent implements OnInit {
         }
       }
     });
+  }
+
+  onImagenFileChange(file: File | null){
+    this.imagen = file;
   }
 
 }

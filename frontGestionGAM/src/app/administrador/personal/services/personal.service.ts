@@ -27,7 +27,7 @@ export class PersonalService {
     return this._httpClient.get(this.url + 'administrador/personas/consultaEspPersona.php', { params: params });
   }
 
-  guardaPersona(form:FormGroup, usuarioId: string | null){
+  guardaPersona(form:FormGroup, usuarioId: string | null, imagen: File | null){
     let formData: FormData = new FormData();
     formData.append('rolId', form.get('rol')?.value);
     formData.append('matricula', form.get('matricula')?.value);
@@ -51,6 +51,11 @@ export class PersonalService {
     if(form.get('pass')?.value != ''){
       formData.append('pass', form.get('pass')?.value);
     }
+    
+    if(imagen){
+      formData.append('imagen', imagen);
+    }
+
     if(usuarioId){
       formData.append('usuarioId', usuarioId);
       return this._httpClient.post(this.url + 'administrador/personas/editaPersona.php', formData);

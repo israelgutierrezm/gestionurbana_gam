@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConsultaSupervisoresComponent } from './supervisores/consulta-supervisores/consulta-supervisores.component';
 import { ConsultaTrabajadoresComponent } from './trabajadores/consulta-trabajadores/consulta-trabajadores.component';
 import { CredencialTrabajadoresComponent } from './trabajadores/credencial-trabajadores/credencial-trabajadores.component';
+import { InputImagesModule } from 'src/app/extras/input-images/input-images.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CredencialTrabajadoresComponent } from './trabajadores/credencial-traba
     CommonModule,
     PersonalRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputImagesModule
   ]
 })
 export class PersonalModule { }

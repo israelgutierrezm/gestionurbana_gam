@@ -97,24 +97,24 @@ function insertaUsuario(
     1');
     if ($usuarioId) {
         $insertaUsuarioRol = inserta('usuario_rol','usuario_id, cat_rol_id, estatus',''.$usuarioId.', '.$rolId.',1'); 
-        if($rolId == 1)
-        $insertaTrabajador = inserta(
-            'tr_administrador', 
-            'usuario_id, clave_administrador, estatus', 
-            $usuarioId . ', "A' . $usuarioId . '", 1'
-        );  
-        if($rolId == 2)
-            $insertaTrabajador = inserta(
-                'tr_trabajador', 
-                'usuario_id, clave_trabajador, estatus', 
-                $usuarioId . ', "T' . $usuarioId . '", 1'
-            );   
-        if($rolId == 3)     
-            $insertaTrabajador = inserta(
-                'tr_supervisor', 
-                'usuario_id, clave_supervisor, estatus', 
-                $usuarioId . ', "S' . $usuarioId . '", 1'
-            );   
+        // if($rolId == 1)
+        // $insertaTrabajador = inserta(
+        //     'tr_administrador', 
+        //     'usuario_id, clave_administrador, estatus', 
+        //     $usuarioId . ', "A' . $usuarioId . '", 1'
+        // );  
+        // if($rolId == 2)
+        //     $insertaTrabajador = inserta(
+        //         'tr_trabajador', 
+        //         'usuario_id, clave_trabajador, estatus', 
+        //         $usuarioId . ', "T' . $usuarioId . '", 1'
+        //     );   
+        // if($rolId == 3)     
+        //     $insertaTrabajador = inserta(
+        //         'tr_supervisor', 
+        //         'usuario_id, clave_supervisor, estatus', 
+        //         $usuarioId . ', "S' . $usuarioId . '", 1'
+        //     );
         $responseInsertaDatosMedicos = insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos, $tipoSangre);
         if ($responseInsertaDatosMedicos) {
             $responseInsertaDatosEmergencia = insertaDatosEmergencia($usuarioId, $nombreContacto, $apellidoContacto, $parentescoContacto, $numeroContacto);
@@ -122,6 +122,7 @@ function insertaUsuario(
         } else {
             return array("estatus" => 0, "msg" => "Error al guardar los datos médicos");
         }
+        guardaImagenPerfil($usuarioId);
     } else {
         return array("estatus" => 0, "msg" => "Error al guardar los datos del usuario");
     }
@@ -171,4 +172,28 @@ function encriptaPassword($pass){
     $encriptacionClass = new Encriptacion();
     $encriptada = $encriptacionClass->hash($pass);
     return $encriptada;
+}
+
+function guardaImagenPerfil($usuarioId){
+    include '../../extras/archivo/class/archivo.class.php';
+    $imagen = $archivo::guardar_archivo_main(
+        'imagen_perfil',
+        $usuarioId,
+        $_FILES["imagen"],//la variable tipo file donde viene el archivo
+        "perfil", //el nombre de la tabla
+        1,
+        null,//tamaño de la extension
+        'archivos_usuario',//carpeta propietario
+        1 //archivo propietario
+      ); 
+
+        
+          if($imagen['status'] == 1 ){
+            update('usuarios','url_perfil ="'.$imagen['url'].'"','usuario_id ='.$usuarioId);
+
+          $json = array("status" => 1, "msg" => "Se inserto la imagen correctamente", "url" => $imagen['url']);
+         }else{
+          $json = array("status" => 0, "msg" => "No se logró insertar la imagen");
+         }
+
 }
