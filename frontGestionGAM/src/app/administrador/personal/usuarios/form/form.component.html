@@ -204,7 +204,7 @@
         </div>
             <!-- <button class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i></button> -->
     </div>
-    <div class="row" *ngIf="usuarioList && !usuarioList.url_foto">
+    <div class="row" *ngIf="(usuarioList && !usuarioList.url_foto) || !usuarioList">
         <div>
             <app-input-images [title]="'Foto de perfil'" (imagenFileChange)="onImagenFileChange($event)"></app-input-images>
         </div>

@@ -1,1 +1,22 @@
-<p>info-persona works!</p>
+<div class="row">
+    <div class="col">
+        <h4>Información del usuario</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="card text-center" *ngIf="usuarioList">
+        <div class="card-header">
+          <h4><strong>{{usuarioList.nombre}} {{usuarioList.ap_pat}} {{usuarioList.ap_mat}}</strong></h4>
+        </div>
+        <div class="card-body">
+            <p><strong>CURP:</strong> {{usuarioList.curp}}</p>
+            <p><strong>Email:</strong> {{usuarioList.email}}</p>
+            <p><strong>Teléfono:</strong> {{usuarioList.telefono}}</p>
+            <p><strong>Celular:</strong> {{usuarioList.celular}}</p>
+            <p><strong>Fecha de nacimiento:</strong> {{usuarioList.fecha_nacimiento}}</p>
+        </div>
+        <div class="card-footer text-muted">
+          Revisado hace 2 días
+        </div>
+      </div>
+</div>
