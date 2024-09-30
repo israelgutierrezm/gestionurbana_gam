@@ -40,8 +40,7 @@
                                     class="fa-solid fa-circle-info"></i></button>
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-secondary text-white"
-                                [routerLink]="['../credencial/'+ persona.usuario_id]"><i
+                            <button class="btn btn-secondary text-white" (click)="descargaCredencial(persona.usuario_id)"><i
                                     class="fa-solid fa-id-card-clip"></i></button>
                         </td>
                         <td class="text-center">

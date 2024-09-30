@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PersonalService } from '../../services/personal.service';
 import { ToastService } from 'src/app/extras/toast/toast.service';
+import { GLOBAL } from 'src/app/shared/globals/global';
 
 declare var alertify: any;
 
@@ -11,6 +12,7 @@ declare var alertify: any;
 })
 export class ConsultaTrabajadoresComponent {
   arrayPersonas: Array<any> = [];
+  urlApi = GLOBAL.url;
 
   constructor(
     private _personalService: PersonalService,
@@ -50,5 +52,11 @@ export class ConsultaTrabajadoresComponent {
   cancelado() {
     this.toast.show('Cancelado', { classname: 'bg-danger' });
   }
+
+  descargaCredencial(usuarioId: any){
+    var params = '?usuarioId=' + usuarioId;
+    window.open(this.urlApi+'reportes/credencial/credencial.php'+params)
+  }
+
 
 }
