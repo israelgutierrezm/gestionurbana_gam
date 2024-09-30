@@ -7,6 +7,8 @@ import { PersonalService } from '../../services/personal.service';
 import { UsuarioForm } from './form-personas.model';
 import { GLOBAL } from 'src/app/shared/globals/global';
 
+declare var alertify: any;
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -73,11 +75,11 @@ export class FormComponent implements OnInit {
       this.title = 'Agregar nuevo usuario';
     }
 
-    if(this.usuarioId){
+    if (this.usuarioId) {
       this.consultaUsuarioForm();
     }
 
-    if(this.rolId){
+    if (this.rolId) {
       this.personaForm.get('rol')?.setValue(this.rolId);
       this.personaForm.get('rol')?.disable();
     }
@@ -91,11 +93,11 @@ export class FormComponent implements OnInit {
     if (this.personaFormControls['curp'].status == 'VALID') {
       const curp = this.personaFormControls['curp'].value
       const sexo = curp[10];
-      if(sexo == 'H'){
+      if (sexo == 'H') {
         this.personaForm.get('sexo')?.setValue(1);
       }
 
-      if(sexo == 'M'){
+      if (sexo == 'M') {
         this.personaForm.get('sexo')?.setValue(2);
       }
     }
@@ -104,7 +106,7 @@ export class FormComponent implements OnInit {
   consultaCatTipoSangre() {
     this._catalogoService.getCatalogoTipoSangre().subscribe({
       next: (response: any) => {
-        if(response && response['estatus']){
+        if (response && response['estatus']) {
           this.tiposSangre = response['catalogo'];
         }
       }
@@ -114,7 +116,7 @@ export class FormComponent implements OnInit {
   consultaRoles() {
     this._catalogoService.getCatalogoRoles().subscribe({
       next: (response: any) => {
-        if(response && response['estatus']){
+        if (response && response['estatus']) {
           this.arregloRoles = response['catalogo'];
         }
       }
@@ -124,17 +126,17 @@ export class FormComponent implements OnInit {
   consultaGeneros() {
     this._catalogoService.getCatalogoGeneros().subscribe({
       next: (response: any) => {
-        if(response && response['estatus']){
+        if (response && response['estatus']) {
           this.arregloGeneros = response['catalogo'];
         }
       }
     });
   }
 
-  consultaUsuarioForm(){
+  consultaUsuarioForm() {
     this._personalService.consultaEspPersona(this.usuarioId).subscribe({
       next: (response: any) => {
-        if(response && response['estatus']){
+        if (response && response['estatus']) {
           this.usuarioList = response['usuario'];
           this.fillForm();
         }
@@ -142,7 +144,7 @@ export class FormComponent implements OnInit {
     });
   }
 
-  fillForm(){
+  fillForm() {
     this.personaForm.get('rol')?.setValue(this.usuarioList?.cat_rol_id);
     this.personaForm.get('nombre')?.setValue(this.usuarioList?.nombre);
     this.personaForm.get('apellidoPaterno')?.setValue(this.usuarioList?.ap_pat);
@@ -161,7 +163,7 @@ export class FormComponent implements OnInit {
     this.personaForm.get('alergias')?.setValue(this.usuarioList?.alergias ?? '');
     this.personaForm.get('medicamentos')?.setValue(this.usuarioList?.medicamentos ?? '');
     this.personaForm.get('tipoSangre')?.setValue(this.usuarioList?.tipo_sangre);
-    if(this.usuarioId){
+    if (this.usuarioId) {
       this.personaForm.get('pass')?.clearValidators();
       this.personaForm.get('pass')?.updateValueAndValidity();
     }
@@ -176,18 +178,43 @@ export class FormComponent implements OnInit {
     }
     this._personalService.guardaPersona(this.personaForm, this.usuarioId, this.imagen).subscribe({
       next: (response: any) => {
-        if(response && response['estatus']){
+        if (response && response['estatus']) {
           this._toast.show(response['msg'], { classname: 'bg-success' });
           this.router.navigate(['/admin/personal/consulta']);
-        }else{
+        } else {
           this._toast.show(response['msg'], { classname: 'bg-danger' });
         }
       }
     });
   }
 
-  onImagenFileChange(file: File | null){
+  onImagenFileChange(file: File | null) {
     this.imagen = file;
+  }
+
+  alertEliminaImagen() {
+    alertify.confirm('', '¿Deseas eliminar esta imagen de usuario?',
+      () => this.eliminaImagen(),
+      () => this.cancelado()
+    ).set('labels', { ok: 'Sí', cancel: 'No' });
+  }
+
+  cancelado() {
+    this._toast.show('Cancelado', { classname: 'bg-danger' });
+  }
+
+  eliminaImagen() {
+    this._personalService.eliminaImagenPerfil(this.usuarioId).subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.imagen = null;
+          this.usuarioList!.url_foto = null;
+          this._toast.show(response['msg'], { classname: 'bg-success' });
+        } else {
+          this._toast.show(response['msg'], { classname: 'bg-danger' });
+        }
+      }
+    });
   }
 
 }

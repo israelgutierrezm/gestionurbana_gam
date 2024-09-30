@@ -26,6 +26,12 @@ export class PersonalService {
     .set('usuarioId', usuarioId || '');
     return this._httpClient.get(this.url + 'administrador/personas/consultaEspPersona.php', { params: params });
   }
+  
+  eliminaImagenPerfil(usuarioId: string | null){
+    let params = new HttpParams()
+    .set('usuarioId', usuarioId || '');
+    return this._httpClient.get(this.url + 'administrador/personas/eliminaImagenPerfil.php', { params: params });
+  }
 
   guardaPersona(form:FormGroup, usuarioId: string | null, imagen: File | null){
     let formData: FormData = new FormData();
