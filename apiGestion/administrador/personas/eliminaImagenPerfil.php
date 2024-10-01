@@ -12,6 +12,7 @@ try {
         // $usuario = Auth::GetData(
         //     $jwt  
         // );
+        
         include './class/personas.class.php';
         $personaClass = new Personas();
         $persona = $personaClass->consultaEspPersona($usuarioId);

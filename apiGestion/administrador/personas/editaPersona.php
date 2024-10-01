@@ -35,9 +35,10 @@ try {
             'medicamentos' => $medicamentos,
             'tipoSangre' => $tipoSangre];
 
-        // $editaPersona = $personaClass->editaPersona($datosUsuario);
-        $editaPersona = true;
-        guardaImagenPerfil($usuarioId);
+        $editaPersona = $personaClass->editaPersona($datosUsuario);
+        if(isset($_FILES["imagen"])){
+            guardaImagenPerfil($usuarioId);
+        }
         if($editaPersona){
             $json = array("estatus" => 1, "msg" => "Información actualizada correctamente");
         }
