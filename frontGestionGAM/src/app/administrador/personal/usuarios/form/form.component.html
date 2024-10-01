@@ -63,15 +63,12 @@
                     <option hidden value="" disabled selected>Selecciona una opción</option>
                     <option [value]="genero.cat_genero_id" *ngFor="let genero of arregloGeneros">{{genero.genero}}
                     </option>
-                    <!-- <option [value]="'M'">Mujer</option> -->
                 </select>
                 <span class="inputError"
                     *ngIf="personaFormControls['sexo'].invalid && personaFormControls['sexo'].touched"> Selecciona una
                     opción
                 </span>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="form-group">
                 <label for="fechaNacimiento">Fecha de nacimiento</label>
                 <input formControlName="fechaNacimiento" type="date" class="form-control" id="fechaNacimiento"
@@ -79,6 +76,28 @@
                 <span class="inputError"
                     *ngIf="personaFormControls['fechaNacimiento'].invalid && personaFormControls['fechaNacimiento'].touched">Ingresa
                     una fecha de nacimiento</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="oficio">Oficio</label>
+                <input formControlName="oficio" type="text" class="form-control" id="oficio" placeholder="Oficio">
+                <span class="inputError"
+                    *ngIf="personaFormControls['oficio'].invalid && personaFormControls['oficio'].touched">Ingresa
+                    un número de teléfono</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Estado civil</label>
+                <select formControlName="edoCivil" class="form-control">
+                    <option hidden value="" disabled selected>Selecciona una opción</option>
+                    <option [value]="estadoC.estado_civil_id" *ngFor="let estadoC of arregloEdosCiviles">{{estadoC.estado_civil}}
+                    </option>
+                </select>
+                <span class="inputError"
+                    *ngIf="personaFormControls['edoCivil'].invalid && personaFormControls['edoCivil'].touched">
+                    Selecciona una
+                    opción
+                </span>
             </div>
             <div class="form-group">
                 <label for="numeroTelefono">Número de teléfono</label>
@@ -106,10 +125,10 @@
             </div>
             <div class="form-group">
                 <label for="pass">Contraseña</label>
-                <input formControlName="pass" type="pass" class="form-control" id="pass"
-                    placeholder="Contraseña">
+                <input formControlName="pass" type="pass" class="form-control" id="pass" placeholder="Contraseña">
                 <span class="inputError"
-                    *ngIf="personaFormControls['pass'].invalid && personaFormControls['pass'].touched">Ingresa una contraseña</span>
+                    *ngIf="personaFormControls['pass'].invalid && personaFormControls['pass'].touched">Ingresa una
+                    contraseña</span>
             </div>
         </div>
     </div>
@@ -130,12 +149,29 @@
                         <input formControlName="alergias" type="text" class="form-control" id="alergias"
                             placeholder="Alergias">
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="medicamentos">Medicamentos</label>
                         <input formControlName="medicamentos" type="text" class="form-control" id="medicamentos"
                             placeholder="Medicamentos">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="estatura">Estatura</label>
+                        <input formControlName="estatura" type="number" class="form-control" id="estatura"
+                            placeholder="Estatura">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Complexión</label>
+                        <select formControlName="complexion" class="form-control">
+                            <option hidden value="" disabled selected>Selecciona una opción</option>
+                            <option [value]="comp.complexion_id" *ngFor="let comp of arregloComplexiones">
+                                {{comp.complexion}}</option>
+                        </select>
+                        <span class="inputError"
+                            *ngIf="personaFormControls['complexion'].invalid && personaFormControls['complexion'].touched">Selecciona
+                            una opción
+                        </span>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Tipo de sangre</label>
@@ -148,6 +184,19 @@
                             *ngIf="personaFormControls['tipoSangre'].invalid && personaFormControls['tipoSangre'].touched">Selecciona
                             una opción
                         </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleRadio">¿Cuenta con seguro social?</label>
+                        <div class="d-flex">
+                            <div class="form-check form-check-inline">
+                                <input formControlName="sSocial" class="form-check-input" type="radio" name="exampleRadios" id="radioSi" [value]="'1'">
+                                <label class="form-check-label" for="radioSi">Sí</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input formControlName="sSocial" class="form-check-input" type="radio" name="exampleRadios" id="radioNo" [value]="'0'">
+                                <label class="form-check-label" for="radioNo">No</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,15 +251,17 @@
         <div class="col d-flex justify-content-start">
             <img [src]="urlAssets+usuarioList.url_foto" class="img-fluid" alt="Imagen perfil" style="max-width: 20%;">
             <div class="col">
-                <button class="btn btn-danger p-2" type="button" (click)="alertEliminaImagen()"><i class="fa-solid fa-user-xmark"></i></button>
+                <button class="btn btn-danger p-2" type="button" (click)="alertEliminaImagen()"><i
+                        class="fa-solid fa-user-xmark"></i></button>
             </div>
         </div>
     </div>
     <div class="row" *ngIf="(usuarioList && !usuarioList.url_foto) || !usuarioList">
         <div>
-            <app-input-images [title]="'Foto de perfil'" (imagenFileChange)="onImagenFileChange($event)"></app-input-images>
+            <app-input-images [title]="'Foto de perfil'"
+                (imagenFileChange)="onImagenFileChange($event)"></app-input-images>
         </div>
     </div>
     <button type="submit" class="btn btn-success mt-3 mb-1 float-end"><i class="fa-solid fa-floppy-disk"></i> Guardar
         información</button>
-    </form>
+</form>

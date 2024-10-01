@@ -22,6 +22,8 @@ export class FormComponent implements OnInit {
   tiposSangre: Array<any> = [];
   arregloRoles: Array<any> = [];
   arregloGeneros: Array<any> = [];
+  arregloComplexiones: Array<any> = [];
+  arregloEdosCiviles: Array<any> = [];
   usuarioId: string | null;
   rolId: string | null;
   imagen: File | null = null;
@@ -49,6 +51,8 @@ export class FormComponent implements OnInit {
       curp: ['', [Validators.required, Validators.pattern(/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/)]],
       sexo: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
+      oficio: ['', Validators.required],
+      edoCivil: ['', Validators.required],
       numeroTelefono: ['', Validators.required],
       numeroCelular: ['', Validators.required],
       email: ['', Validators.required],
@@ -60,7 +64,10 @@ export class FormComponent implements OnInit {
       enfermedades: [''],
       alergias: [''],
       medicamentos: [''],
-      tipoSangre: ['', Validators.required]
+      estatura: ['', Validators.required],
+      complexion: ['',Validators.required],
+      tipoSangre: ['', Validators.required],
+      sSocial: [0, Validators.required]
     });
   }
 
@@ -87,6 +94,8 @@ export class FormComponent implements OnInit {
     this.consultaCatTipoSangre();
     this.consultaRoles();
     this.consultaGeneros();
+    this.consultaCatComplexion();
+    this.consultaCatEdosCiviles();
   }
 
   getSexo() {
@@ -108,6 +117,26 @@ export class FormComponent implements OnInit {
       next: (response: any) => {
         if (response && response['estatus']) {
           this.tiposSangre = response['catalogo'];
+        }
+      }
+    });
+  }
+
+  consultaCatComplexion() {
+    this._catalogoService.getCatalogoComplexiones().subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.arregloComplexiones = response['catalogo'];
+        }
+      }
+    });
+  }
+
+  consultaCatEdosCiviles() {
+    this._catalogoService.getCatalogoEdosCiviles().subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.arregloEdosCiviles = response['catalogo'];
         }
       }
     });
@@ -152,6 +181,8 @@ export class FormComponent implements OnInit {
     this.personaForm.get('curp')?.setValue(this.usuarioList?.curp);
     this.personaForm.get('sexo')?.setValue(this.usuarioList?.cat_genero_id);
     this.personaForm.get('fechaNacimiento')?.setValue(this.usuarioList?.fecha_nacimiento);
+    this.personaForm.get('oficio')?.setValue(this.usuarioList?.oficio);
+    this.personaForm.get('edoCivil')?.setValue(this.usuarioList?.estado_civil_id);
     this.personaForm.get('numeroTelefono')?.setValue(this.usuarioList?.telefono);
     this.personaForm.get('numeroCelular')?.setValue(this.usuarioList?.celular);
     this.personaForm.get('email')?.setValue(this.usuarioList?.email);
@@ -162,7 +193,10 @@ export class FormComponent implements OnInit {
     this.personaForm.get('enfermedades')?.setValue(this.usuarioList?.condiciones_preexistentes ?? '');
     this.personaForm.get('alergias')?.setValue(this.usuarioList?.alergias ?? '');
     this.personaForm.get('medicamentos')?.setValue(this.usuarioList?.medicamentos ?? '');
+    this.personaForm.get('estatura')?.setValue(this.usuarioList?.estatura);
+    this.personaForm.get('complexion')?.setValue(this.usuarioList?.complexion_id);
     this.personaForm.get('tipoSangre')?.setValue(this.usuarioList?.tipo_sangre);
+    this.personaForm.get('sSocial')?.setValue(this.usuarioList?.seguro_social);
     if (this.usuarioId) {
       this.personaForm.get('pass')?.clearValidators();
       this.personaForm.get('pass')?.updateValueAndValidity();
@@ -180,7 +214,7 @@ export class FormComponent implements OnInit {
       next: (response: any) => {
         if (response && response['estatus']) {
           this._toast.show(response['msg'], { classname: 'bg-success' });
-          this.router.navigate(['/admin/personal/consulta']);
+          this.router.navigate(['/admin/personal/consulta-usuarios']);
         } else {
           this._toast.show(response['msg'], { classname: 'bg-danger' });
         }

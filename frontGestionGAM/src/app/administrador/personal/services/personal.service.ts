@@ -43,6 +43,8 @@ export class PersonalService {
     formData.append('curp', form.get('curp')?.value);
     formData.append('generoId', form.get('sexo')?.value);
     formData.append('fechaNacimiento', form.get('fechaNacimiento')?.value);
+    formData.append('oficio', form.get('oficio')?.value);
+    formData.append('edoCivil', form.get('edoCivil')?.value);
     formData.append('numeroTelefono', form.get('numeroTelefono')?.value);
     formData.append('numeroCelular', form.get('numeroCelular')?.value);
     formData.append('email', form.get('email')?.value);
@@ -53,7 +55,10 @@ export class PersonalService {
     formData.append('enfermedades', form.get('enfermedades')?.value);
     formData.append('alergias', form.get('alergias')?.value);
     formData.append('medicamentos', form.get('medicamentos')?.value);
+    formData.append('estatura', form.get('estatura')?.value);
+    formData.append('complexion', form.get('complexion')?.value);
     formData.append('tipoSangre', form.get('tipoSangre')?.value);
+    formData.append('sSocial', form.get('sSocial')?.value);
     if(form.get('pass')?.value != ''){
       formData.append('pass', form.get('pass')?.value);
     }

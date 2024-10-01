@@ -23,6 +23,8 @@ try {
             'curp' => $curp,
             'generoId' => $generoId,
             'fechaNacimiento' => $fechaNacimiento,
+            'oficio' => $oficio,
+            'edoCivil' => $edoCivil,
             'numeroTelefono' => $numeroTelefono,
             'numeroCelular' => $numeroCelular,
             'email' => $email,
@@ -32,8 +34,12 @@ try {
             'numeroContacto' => $numeroContacto,
             'enfermedades' => $enfermedades,
             'alergias' => $alergias,
+            'estatura' => $estatura,
+            'complexion' => $complexion,
             'medicamentos' => $medicamentos,
-            'tipoSangre' => $tipoSangre];
+            'tipoSangre' => $tipoSangre,
+            'sSocial' => $sSocial,
+        ];
 
         $editaPersona = $personaClass->editaPersona($datosUsuario);
         if(isset($_FILES["imagen"])){

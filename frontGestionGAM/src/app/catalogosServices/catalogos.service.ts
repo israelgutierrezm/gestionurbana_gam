@@ -22,6 +22,14 @@ export class CatalogosService {
     return this._httpClient.get(this.url +'catalogos/catGeneros.php');
   }
 
+  getCatalogoComplexiones(){
+    return this._httpClient.get(this.url +'catalogos/catComplexion.php');
+  }
+
+  getCatalogoEdosCiviles(){
+    return this._httpClient.get(this.url +'catalogos/catEdoCivil.php');
+  }
+
   getDireccionesTerritoriales(){
     return this._httpClient.get(this.url +'catalogos/catDireccionesTerritoriales.php');
   }

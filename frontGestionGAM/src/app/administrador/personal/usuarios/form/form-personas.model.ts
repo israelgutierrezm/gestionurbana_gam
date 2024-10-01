@@ -8,6 +8,8 @@ export interface UsuarioForm {
     telefono: string;
     celular: string;
     fecha_nacimiento: string;
+    oficio: string;
+    estado_civil_id: string;
     cat_genero_id: string;
     cat_rol_id: string;
     nombre_contacto: string;
@@ -18,6 +20,9 @@ export interface UsuarioForm {
     tipo_sangre: string;
     alergias: string;
     medicamentos: string;
+    estatura: string;
+    complexion_id: string;
+    seguro_social: number;
     condiciones_preexistentes: string;
     url_foto: string | null
   }

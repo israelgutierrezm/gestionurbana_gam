@@ -28,7 +28,8 @@ class Personas
     {
         $persona = arreglo(query('SELECT u.usuario_id, u.nombre, u.ap_pat, u.ap_mat, u.curp, u.email, u.telefono, u.celular, u.fecha_nacimiento, u.cat_genero_id,
         ur.cat_rol_id, ude.nombre AS nombre_contacto, ude.apellido_paterno AS apellido_contacto, ude.telefono AS telefono_contacto,
-        ude.celular AS celular_contacto, ude.parentesco, udm.tipo_sangre, udm.alergias, udm.medicamentos, udm.condiciones_preexistentes, u.url_foto
+        ude.celular AS celular_contacto, ude.parentesco, udm.tipo_sangre, udm.alergias, udm.medicamentos, udm.condiciones_preexistentes, u.url_foto, udm.seguro_social,
+        udm.complexion_id, udm.estatura, u.estado_civil_id, u.oficio
         FROM usuario u 
         JOIN usuario_rol ur on ur.usuario_id = u.usuario_id
         JOIN usuario_datos_emergencia ude on ude.usuario_id = u.usuario_id
@@ -47,6 +48,8 @@ class Personas
             curp = "' . $datosUsuario['curp'] . '",
             cat_genero_id = "' . $datosUsuario['generoId'] . '",
             fecha_nacimiento = "' . $datosUsuario['fechaNacimiento'] . '",
+            oficio = "' . $datosUsuario['oficio'] . '",
+            estado_civil_id = "' . $datosUsuario['edoCivil'] . '",
             telefono = "' . $datosUsuario['numeroTelefono'] . '",
             celular = "' . $datosUsuario['numeroCelular'] . '",
             email = "' . $datosUsuario['email'] . '"',
@@ -60,6 +63,9 @@ class Personas
             'condiciones_preexistentes = "' . $datosUsuario['enfermedades'] . '",
             alergias = "' . $datosUsuario['alergias'] . '",
             medicamentos = "' . $datosUsuario['medicamentos'] . '",
+            estatura = ' . $datosUsuario['estatura'] . ',
+            complexion_id = ' . $datosUsuario['complexion'] . ',
+            seguro_social = ' . $datosUsuario['sSocial'] . ',
             tipo_sangre = "' . $datosUsuario['tipoSangre'] . '"',
             'usuario_id =' . $datosUsuario['usuarioId']
         );

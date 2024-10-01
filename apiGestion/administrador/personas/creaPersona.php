@@ -12,7 +12,7 @@ try {
         // $usuario = Auth::GetData(
         //     $jwt  
         // );
-        
+
         $respuestaGuardaPersona = insertaUsuario(
             $rolId,
             $nombre,
@@ -21,6 +21,8 @@ try {
             $curp,
             $generoId,
             $fechaNacimiento,
+            $oficio,
+            $edoCivil,
             $numeroTelefono,
             $numeroCelular,
             $email,
@@ -32,7 +34,10 @@ try {
             $enfermedades,
             $alergias,
             $medicamentos,
-            $tipoSangre
+            $estatura,
+            $complexion,
+            $tipoSangre,
+            $sSocial
         );
 
         $json = $respuestaGuardaPersona;
@@ -53,6 +58,8 @@ function insertaUsuario(
     $curp,
     $generoId,
     $fechaNacimiento,
+    $oficio,
+    $edoCivil,
     $numeroTelefono,
     $numeroCelular,
     $email,
@@ -64,7 +71,10 @@ function insertaUsuario(
     $enfermedades,
     $alergias,
     $medicamentos,
-    $tipoSangre
+    $estatura,
+    $complexion,
+    $tipoSangre,
+    $seguroSocial
 ) {
     $usuarioId = inserta_last_id('usuario', '
     usuario,
@@ -77,12 +87,14 @@ function insertaUsuario(
     telefono,
     celular,
     fecha_nacimiento,
+    oficio,
+    estado_civil_id,
     url_foto,
     cat_genero_id,
     fecha_creacion,
     estatus', '
     "' . $email . '",
-    "'.encriptaPassword($pass).'",
+    "' . encriptaPassword($pass) . '",
     "' . $nombre . '",
     "' . $apellidoPaterno . '",
     "' . $apellidoMaterno . '",
@@ -91,12 +103,14 @@ function insertaUsuario(
     ' . $numeroTelefono . ',
     ' . $numeroCelular . ',
     "' . $fechaNacimiento . '",
-    "/url",
+    "' . $oficio . '",
+    "' . $edoCivil . '",
+    "",
     ' . $generoId . ',
     NOW(),
     1');
     if ($usuarioId) {
-        $insertaUsuarioRol = inserta('usuario_rol','usuario_id, cat_rol_id, estatus',''.$usuarioId.', '.$rolId.',1'); 
+        $insertaUsuarioRol = inserta('usuario_rol', 'usuario_id, cat_rol_id, estatus', '' . $usuarioId . ', ' . $rolId . ',1');
         // if($rolId == 1)
         // $insertaTrabajador = inserta(
         //     'tr_administrador', 
@@ -115,20 +129,20 @@ function insertaUsuario(
         //         'usuario_id, clave_supervisor, estatus', 
         //         $usuarioId . ', "S' . $usuarioId . '", 1'
         //     );
-        $responseInsertaDatosMedicos = insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos, $tipoSangre);
+        $responseInsertaDatosMedicos = insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos, $estatura, $complexion, $tipoSangre, $seguroSocial);
         if ($responseInsertaDatosMedicos) {
             $responseInsertaDatosEmergencia = insertaDatosEmergencia($usuarioId, $nombreContacto, $apellidoContacto, $parentescoContacto, $numeroContacto);
+            guardaImagenPerfil($usuarioId);
             return $responseInsertaDatosEmergencia;
         } else {
             return array("estatus" => 0, "msg" => "Error al guardar los datos médicos");
         }
-        guardaImagenPerfil($usuarioId);
     } else {
         return array("estatus" => 0, "msg" => "Error al guardar los datos del usuario");
     }
 }
 
-function insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos, $tipoSangre)
+function insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos, $estatura, $complexion, $tipoSangre, $seguroSocial)
 {
     $insertaDatosMedicos = inserta_last_id(
         'usuario_datos_medicos',
@@ -136,12 +150,18 @@ function insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos
         tipo_sangre,
         alergias,
         medicamentos,
+        estatura,
+        complexion_id,
+        seguro_social,
         condiciones_preexistentes',
-        ''.$usuarioId.',
-        '.$tipoSangre.',
-        "'.$alergias.'",
-        "'.$medicamentos.'",
-        "'.$enfermedades.'"'
+        '' . $usuarioId . ',
+        ' . $tipoSangre . ',
+        "' . $alergias . '",
+        "' . $medicamentos . '",
+        "' . $estatura . '",
+        ' . $complexion . ',
+        ' . $seguroSocial . ',
+        "' . $enfermedades . '"'
     );
     return $insertaDatosMedicos;
 }
@@ -149,17 +169,19 @@ function insertaDatosMedicos($usuarioId, $enfermedades, $alergias, $medicamentos
 
 function insertaDatosEmergencia($usuarioId, $nombreContacto, $apellidoContacto, $parentescoContacto, $numeroContacto)
 {
-    $insertaDatosEmergencia = inserta_last_id('usuario_datos_emergencia',
-     'usuario_id,
+    $insertaDatosEmergencia = inserta_last_id(
+        'usuario_datos_emergencia',
+        'usuario_id,
      nombre,
      apellido_paterno,
      telefono,
      parentesco',
-     ''.$usuarioId.',
-     "'.$nombreContacto.'",
-     "'.$apellidoContacto.'",
-     '.$numeroContacto.',
-     "'.$parentescoContacto.'"');
+        '' . $usuarioId . ',
+     "' . $nombreContacto . '",
+     "' . $apellidoContacto . '",
+     ' . $numeroContacto . ',
+     "' . $parentescoContacto . '"'
+    );
     if ($insertaDatosEmergencia) {
         return array("estatus" => 1, "msg" => "Se guardó la información correctamente.");
     } else {
@@ -167,7 +189,8 @@ function insertaDatosEmergencia($usuarioId, $nombreContacto, $apellidoContacto, 
     }
 }
 
-function encriptaPassword($pass){
+function encriptaPassword($pass)
+{
     include '../../extras/encriptacion/class/encriptacion.class.php';
     $encriptacionClass = new Encriptacion();
     $encriptada = $encriptacionClass->hash($pass);
@@ -176,20 +199,19 @@ function encriptaPassword($pass){
 
 function guardaImagenPerfil($usuarioId){
     include '../../extras/archivo/class/archivo.class.php';
+    $img = $_FILES["imagen"];
+    $archivo = new Archivo();
+    $url = 'archivos_usuario/'.$usuarioId.'/imagen_perfil';
     $imagen = $archivo::guardar_archivo_main(
-        'imagen_perfil',
-        $usuarioId,
-        $_FILES["imagen"],//la variable tipo file donde viene el archivo
-        "perfil", //el nombre de la tabla
-        1,
-        null,//tamaño de la extension
-        'archivos_usuario',//carpeta propietario
-        1 //archivo propietario
+        $img,//la variable tipo file donde viene el archivo
+        'perfil',
+        $url
       ); 
-
         
           if($imagen['status'] == 1 ){
-            update('usuarios','url_perfil ="'.$imagen['url'].'"','usuario_id ='.$usuarioId);
+            $basename = basename($img["name"]);
+            $extension = strtolower(pathinfo($basename,PATHINFO_EXTENSION));
+            update('usuario','url_foto ="assets/'.$url.'/perfil.'.$extension.'"','usuario_id ='.$usuarioId);
 
           $json = array("status" => 1, "msg" => "Se inserto la imagen correctamente", "url" => $imagen['url']);
          }else{
