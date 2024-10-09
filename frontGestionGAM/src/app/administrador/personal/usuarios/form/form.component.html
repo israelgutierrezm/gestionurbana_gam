@@ -52,10 +52,9 @@
                 <label for="curp">CURP</label>
                 <input formControlName="curp" type="text" class="form-control" id="curp" placeholder="CURP"
                     onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
-                    (change)="getSexo()">
+                    (change)="validaCurp()">
                 <span class="inputError"
-                    *ngIf="personaFormControls['curp'].invalid && personaFormControls['curp'].touched">Ingresa
-                    una CURP válida</span>
+                    *ngIf="personaFormControls['curp'].invalid && personaFormControls['curp'].touched">{{errorCurp}}</span>
             </div>
             <div class="form-group">
                 <label class="control-label">Sexo</label>
@@ -118,19 +117,18 @@
             </div>
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
-                <input formControlName="email" type="email" class="form-control" id="email"
+                <input formControlName="email" type="email" class="form-control" id="email" (change)="validaEmail()"
                     placeholder="Correo electrónico">
                 <span class="inputError"
-                    *ngIf="personaFormControls['email'].invalid && personaFormControls['email'].touched">Ingresa
-                    un correo electrónico válido</span>
+                    *ngIf="personaFormControls['email'].invalid && personaFormControls['email'].touched">{{errorEmail}}</span>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="pass">Contraseña</label>
                 <input formControlName="pass" type="pass" class="form-control" id="pass" placeholder="Contraseña">
                 <span class="inputError"
                     *ngIf="personaFormControls['pass'].invalid && personaFormControls['pass'].touched">Ingresa una
                     contraseña</span>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="card border-info mt-3">

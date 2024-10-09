@@ -83,4 +83,16 @@ export class PersonalService {
     return this._httpClient.post(this.url + 'administrador/personas/eliminaPersona.php', formData);
   }
 
+  validaCurp(curp: string){
+    let params = new HttpParams()
+    .set('curp', curp);
+    return this._httpClient.get(this.url + 'general/usuarios/validaCurp.php', { params: params });
+  }
+
+  validaEmail(email: string){
+    let params = new HttpParams()
+    .set('email', email);
+    return this._httpClient.get(this.url + 'general/usuarios/validaCorreo.php', { params: params });
+  }
+
 }

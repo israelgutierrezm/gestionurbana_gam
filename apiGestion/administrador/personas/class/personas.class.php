@@ -103,7 +103,7 @@ class Personas
         fecha_creacion,
         estatus', '
         "' . $datosUsuario['email'] . '",
-        "' . $this->encriptaPassword($datosUsuario['pass']) . '",
+        "password",
         "' . $datosUsuario['nombre'] . '",
         "' . $datosUsuario['apellidoPaterno'] . '",
         "' . $datosUsuario['apellidoMaterno'] . '",

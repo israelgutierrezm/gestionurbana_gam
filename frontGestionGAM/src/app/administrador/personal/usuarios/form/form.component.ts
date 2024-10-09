@@ -32,6 +32,9 @@ export class FormComponent implements OnInit {
 
   urlAssets = GLOBAL.urlAssets
 
+  errorCurp: string = 'Ingresa una CURP válida'; 
+  errorEmail: string = 'Ingresa un correo electrónico válido'; 
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,7 +60,7 @@ export class FormComponent implements OnInit {
       numeroTelefono: ['', Validators.required],
       numeroCelular: ['', Validators.required],
       email: ['', Validators.required],
-      pass: ['', Validators.required],
+      pass: [''],
       nombreContacto: ['', Validators.required],
       apellidoContacto: ['', Validators.required],
       parentescoContacto: ['', Validators.required],
@@ -118,6 +121,35 @@ export class FormComponent implements OnInit {
         this.personaForm.get('sexo')?.setValue(2);
       }
     }
+  }
+
+  validaCurp() {
+    const curp = this.personaFormControls['curp'].value;
+    this._personalService.validaCurp(curp).subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.personaForm.get('curp')?.setErrors({invalid:true});
+          this.errorCurp = response['msg'];
+        }else{
+          this.errorCurp = 'Ingresa una CURP válida';
+          this.getSexo();
+        }
+      }
+    });
+  }
+
+  validaEmail() {
+    const email = this.personaFormControls['email'].value;
+    this._personalService.validaEmail(email).subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.errorEmail = response['msg'];
+          this.personaForm.get('email')?.setErrors({invalid:true});
+        }else{
+          this.errorEmail = 'Ingresa un correo electrónico válido';
+        }
+      }
+    });
   }
 
   changeValidators(sSocialValor: string){
