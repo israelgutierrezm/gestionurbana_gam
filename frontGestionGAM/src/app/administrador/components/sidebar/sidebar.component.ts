@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
       label: 'Usuarios'
     },
     {
-      routeLink: 'frentes',
+      routeLink: 'frentes/consulta',
       icon: 'fa-solid fa-route',
       label: 'Frentes'
     },
