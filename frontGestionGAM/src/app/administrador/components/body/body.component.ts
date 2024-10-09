@@ -9,6 +9,7 @@ export class BodyComponent {
 
   @Input() collapsed: boolean = false;
   @Input() screenWidth: number = 0;
+  showHeader: boolean = true;
 
   getBodyClass() : string{
     let styleclass = '';

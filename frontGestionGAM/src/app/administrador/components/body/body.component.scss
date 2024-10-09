@@ -1,1 +1,12 @@
-@import '../../../shared/styles/body.scss'
+@import '../../../shared/styles/body.scss';
+
+footer{
+    position: fixed;
+    // top: 0;
+    bottom: 0;
+    font-size: small;
+    text-justify: auto;
+    width: calc(100% - 8rem);
+    // padding: 10px 0;
+    text-align: center;
+}
