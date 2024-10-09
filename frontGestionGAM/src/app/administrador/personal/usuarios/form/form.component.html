@@ -90,7 +90,8 @@
                 <label class="control-label">Estado civil</label>
                 <select formControlName="edoCivil" class="form-control">
                     <option hidden value="" disabled selected>Selecciona una opción</option>
-                    <option [value]="estadoC.estado_civil_id" *ngFor="let estadoC of arregloEdosCiviles">{{estadoC.estado_civil}}
+                    <option [value]="estadoC.estado_civil_id" *ngFor="let estadoC of arregloEdosCiviles">
+                        {{estadoC.estado_civil}}
                     </option>
                 </select>
                 <span class="inputError"
@@ -154,13 +155,13 @@
                         <input formControlName="medicamentos" type="text" class="form-control" id="medicamentos"
                             placeholder="Medicamentos">
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="estatura">Estatura</label>
                         <input formControlName="estatura" type="number" class="form-control" id="estatura"
                             placeholder="Estatura">
                     </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label">Complexión</label>
                         <select formControlName="complexion" class="form-control">
@@ -186,16 +187,37 @@
                         </span>
                     </div>
                     <div class="form-group">
-                        <label for="exampleRadio">¿Cuenta con seguro social?</label>
+                        <label for="sSocial">¿Cuenta con seguro social?</label>
                         <div class="d-flex">
                             <div class="form-check form-check-inline">
-                                <input formControlName="sSocial" class="form-check-input" type="radio" name="exampleRadios" id="radioSi" [value]="'1'">
+                                <input formControlName="sSocial" class="form-check-input" type="radio"
+                                    name="sSocial" id="radioSi" [value]="'1'">
                                 <label class="form-check-label" for="radioSi">Sí</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input formControlName="sSocial" class="form-check-input" type="radio" name="exampleRadios" id="radioNo" [value]="'0'">
+                                <input formControlName="sSocial" class="form-check-input" type="radio"
+                                    name="sSocial" id="radioNo" [value]="'0'">
                                 <label class="form-check-label" for="radioNo">No</label>
                             </div>
+                        </div>
+                    </div>
+                    <div *ngIf="personaFormControls['sSocial'].value == '1'">
+                        <div class="form-group">
+                            <label class="control-label">Tipo de seguro</label>
+                            <select formControlName="tipoSeguro" class="form-control">
+                                <option hidden value="" disabled selected>Selecciona una opción</option>
+                                <option [value]="seguro.seguro_id" *ngFor="let seguro of arregloSeguros">
+                                    {{seguro.seguro}}</option>
+                            </select>
+                            <span class="inputError"
+                                *ngIf="personaFormControls['tipoSeguro'].invalid && personaFormControls['tipoSeguro'].touched">Selecciona
+                                una opción
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="numeroSeguro">Número de seguro</label>
+                            <input formControlName="numeroSeguro" type="text" class="form-control" id="numeroSeguro"
+                                placeholder="Número de seguro">
                         </div>
                     </div>
                 </div>

@@ -59,6 +59,8 @@ export class PersonalService {
     formData.append('complexion', form.get('complexion')?.value);
     formData.append('tipoSangre', form.get('tipoSangre')?.value);
     formData.append('sSocial', form.get('sSocial')?.value);
+    formData.append('tipoSeguro', form.get('tipoSeguro')?.value);
+    formData.append('numeroSeguro', form.get('numeroSeguro')?.value);
     if(form.get('pass')?.value != ''){
       formData.append('pass', form.get('pass')?.value);
     }
@@ -71,7 +73,6 @@ export class PersonalService {
       formData.append('usuarioId', usuarioId);
       return this._httpClient.post(this.url + 'administrador/personas/editaPersona.php', formData);
     }else{
-
       return this._httpClient.post(this.url + 'administrador/personas/creaPersona.php', formData);
     }
   }

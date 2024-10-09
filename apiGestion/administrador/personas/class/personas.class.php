@@ -17,7 +17,7 @@ class Personas
         $queryPersonas = query('SELECT u.usuario_id, u.usuario, u.nombre, CONCAT(u.ap_pat, " ", u.ap_mat) AS apellidos, u.curp, ur.cat_rol_id
         FROM usuario u
         JOIN usuario_rol ur On ur.usuario_id = u.usuario_id
-        WHERE u.estatus = 1 AND ur.estatus = 1 AND ur.cat_rol_id ='.$rolId);
+        WHERE u.estatus = 1 AND ur.estatus = 1 AND ur.cat_rol_id =' . $rolId);
         while ($persona = arreglo($queryPersonas)) {
             $arregloPersonas[] = $persona;
         }
@@ -29,7 +29,7 @@ class Personas
         $persona = arreglo(query('SELECT u.usuario_id, u.nombre, u.ap_pat, u.ap_mat, u.curp, u.email, u.telefono, u.celular, u.fecha_nacimiento, u.cat_genero_id,
         ur.cat_rol_id, ude.nombre AS nombre_contacto, ude.apellido_paterno AS apellido_contacto, ude.telefono AS telefono_contacto,
         ude.celular AS celular_contacto, ude.parentesco, udm.tipo_sangre, udm.alergias, udm.medicamentos, udm.condiciones_preexistentes, u.url_foto, udm.seguro_social,
-        udm.complexion_id, udm.estatura, u.estado_civil_id, u.oficio
+        udm.complexion_id, udm.estatura, u.estado_civil_id, u.oficio, udm.tipo_seguro_id, udm.numero_seguro
         FROM usuario u 
         JOIN usuario_rol ur on ur.usuario_id = u.usuario_id
         JOIN usuario_datos_emergencia ude on ude.usuario_id = u.usuario_id
@@ -66,6 +66,8 @@ class Personas
             estatura = ' . $datosUsuario['estatura'] . ',
             complexion_id = ' . $datosUsuario['complexion'] . ',
             seguro_social = ' . $datosUsuario['sSocial'] . ',
+            tipo_seguro_id = ' . $datosUsuario['tipoSeguro'] . ',
+            numero_seguro = "' . $datosUsuario['numeroSeguro'] . '",
             tipo_sangre = "' . $datosUsuario['tipoSangre'] . '"',
             'usuario_id =' . $datosUsuario['usuarioId']
         );
@@ -79,5 +81,130 @@ class Personas
             'usuario_id =' . $datosUsuario['usuarioId']
         );
         return $editaUsuario;
+    }
+
+    public function creaPersona($datosUsuario)
+    {
+        $usuarioId = inserta_last_id('usuario', '
+        usuario,
+        contraseña,
+        nombre,
+        ap_pat,
+        ap_mat, 
+        curp,
+        email,
+        telefono,
+        celular,
+        fecha_nacimiento,
+        oficio,
+        estado_civil_id,
+        url_foto,
+        cat_genero_id,
+        fecha_creacion,
+        estatus', '
+        "' . $datosUsuario['email'] . '",
+        "' . $this->encriptaPassword($datosUsuario['pass']) . '",
+        "' . $datosUsuario['nombre'] . '",
+        "' . $datosUsuario['apellidoPaterno'] . '",
+        "' . $datosUsuario['apellidoMaterno'] . '",
+        "' . $datosUsuario['curp'] . '",
+        "' . $datosUsuario['email'] . '",
+        ' . $datosUsuario['numeroTelefono'] . ',
+        ' . $datosUsuario['numeroCelular'] . ',
+        "' . $datosUsuario['fechaNacimiento'] . '",
+        "' . $datosUsuario['oficio'] . '",
+        "' . $datosUsuario['edoCivil'] . '",
+        "",
+        ' . $datosUsuario['generoId'] . ',
+        NOW(),
+        1');
+        if ($usuarioId) {
+            $insertaUsuarioRol = inserta('usuario_rol', 'usuario_id, cat_rol_id, estatus', '' . $usuarioId . ', ' . $datosUsuario['rolId'] . ',1');
+            if($datosUsuario['rolId'] == 1)
+            $insertaTrabajador = inserta(
+                'tr_administrador', 
+                'usuario_id, clave_administrador, estatus', 
+                $usuarioId . ', "A' . $usuarioId . '", 1'
+            );
+            if($datosUsuario['rolId'] == 2)
+                $insertaTrabajador = inserta(
+                    'tr_trabajador', 
+                    'usuario_id, clave_trabajador, fecha_ingreso, estatus', 
+                    $usuarioId . ', "T' . $usuarioId . '", NOW(), 1'
+                );
+            if($datosUsuario['rolId'] == 3)
+                $insertaTrabajador = inserta(
+                    'tr_supervisor', 
+                    'usuario_id, clave_supervisor, estatus', 
+                    $usuarioId . ', "S' . $usuarioId . '", 1'
+                );
+            $responseInsertaDatosMedicos = $this->insertaDatosMedicos($usuarioId, $datosUsuario);
+            if ($responseInsertaDatosMedicos) {
+                $responseInsertaDatosEmergencia = $this->insertaDatosEmergencia($usuarioId, $datosUsuario);
+                return $responseInsertaDatosEmergencia;
+            } else {
+                return array("estatus" => 0, "msg" => "Error al guardar los datos médicos");
+            }
+        } else {
+            return array("estatus" => 0, "msg" => "Error al guardar los datos del usuario");
+        }
+    }
+
+    private function insertaDatosMedicos($usuarioId, $datosUsuario)
+    {
+        $insertaDatosMedicos = inserta_last_id(
+            'usuario_datos_medicos',
+            'usuario_id,
+            tipo_sangre,
+            alergias,
+            medicamentos,
+            estatura,
+            complexion_id,
+            seguro_social,
+            tipo_seguro_id,
+            numero_seguro,
+            condiciones_preexistentes',
+            '' . $usuarioId . ',
+            ' . $datosUsuario['tipoSangre'] . ',
+            "' . $datosUsuario['alergias'] . '",
+            "' . $datosUsuario['medicamentos'] . '",
+            "' . $datosUsuario['estatura'] . '",
+            ' . $datosUsuario['complexion'] . ',
+            ' . $datosUsuario['sSocial'] . ',
+            ' . $datosUsuario['tipoSeguro'] . ',
+            "' . $datosUsuario['numeroSeguro'] . '",
+            "' . $datosUsuario['enfermedades'] . '"'
+        );
+        return $insertaDatosMedicos;
+    }
+
+    private function insertaDatosEmergencia($usuarioId, $datosUsuario)
+    {
+        $insertaDatosEmergencia = inserta_last_id(
+        'usuario_datos_emergencia',
+        'usuario_id,
+         nombre,
+         apellido_paterno,
+         telefono,
+         parentesco',
+            '' . $usuarioId . ',
+         "' . $datosUsuario['nombreContacto'] . '",
+         "' . $datosUsuario['apellidoContacto'] . '",
+         ' . $datosUsuario['numeroContacto'] . ',
+         "' . $datosUsuario['parentescoContacto'] . '"'
+        );
+        if ($insertaDatosEmergencia) {
+            return array("estatus" => 1, "msg" => "Se guardó la información correctamente.", "usuarioId"=> $usuarioId);
+        } else {
+            return array("estatus" => 0, "msg" => "Error al guardar los datos del contacto de emergencia.");
+        }
+    }
+
+    private function encriptaPassword($pass)
+    {
+        include '../../extras/encriptacion/class/encriptacion.class.php';
+        $encriptacionClass = new Encriptacion();
+        $encriptada = $encriptacionClass->hash($pass);
+        return $encriptada;
     }
 }

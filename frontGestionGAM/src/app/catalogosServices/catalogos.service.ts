@@ -42,4 +42,8 @@ export class CatalogosService {
     return this._httpClient.get(this.url +'catalogos/catColoniasGAM.php');
   }
 
+  getTiposSeguros(){
+    return this._httpClient.get(this.url +'catalogos/catTiposSeguros.php');
+  }
+
 }

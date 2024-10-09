@@ -39,6 +39,8 @@ try {
             'medicamentos' => $medicamentos,
             'tipoSangre' => $tipoSangre,
             'sSocial' => $sSocial,
+            'tipoSeguro' => isset($tipoSeguro) && $tipoSeguro != '' ? $tipoSeguro : 'NULL',
+            'numeroSeguro' => isset($numeroSeguro) && $numeroSeguro != '' ? $numeroSeguro : 'NULL'
         ];
 
         $editaPersona = $personaClass->editaPersona($datosUsuario);

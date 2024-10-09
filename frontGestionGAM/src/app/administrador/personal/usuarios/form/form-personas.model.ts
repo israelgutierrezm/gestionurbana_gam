@@ -23,6 +23,8 @@ export interface UsuarioForm {
     estatura: string;
     complexion_id: string;
     seguro_social: number;
+    tipo_seguro_id: string;
+    numero_seguro: string;
     condiciones_preexistentes: string;
     url_foto: string | null
   }
