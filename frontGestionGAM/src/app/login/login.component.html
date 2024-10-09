@@ -22,3 +22,11 @@
         </form>
     </div>
 </div>
+<header class="bg-body-tertiary text-center text-lg-start" *ngIf="showFooter">
+    <div class="float-end">
+        <button class="btn btn-link text-secondary" (click)="showFooter = false"><i class="fa fa-times" aria-hidden="true"></i></button>
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        <small>"Este programa es de carácter público, no es patrocinado ni promovido por partido político alguno y sus recursos provienen de los impuestos que pagan todos los contribuyentes. Está prohibido el uso de este programa con fines políticos, electorales, de lucro y otros distintos a los establecidos. Quien haga uso indebido de los recursos de este programa en la Ciudad de México, será sancionado de acuerdo a la ley aplicable y ante la autoridad competente"</small>
+    </div>
+</header>

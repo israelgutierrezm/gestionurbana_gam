@@ -11,6 +11,7 @@ import { LoginService } from './services/login.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  showFooter: boolean = true;
   // jwt: string;
 
   constructor(

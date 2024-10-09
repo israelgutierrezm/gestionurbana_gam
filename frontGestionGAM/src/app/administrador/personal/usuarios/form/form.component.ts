@@ -72,35 +72,6 @@ export class FormComponent implements OnInit {
       tipoSeguro: [''],
       numeroSeguro: ['']
     });
-
-    // this.personaForm = this.formBuilder.group({
-    //   rol: [2, Validators.required],
-    //   nombre: ['Trabajador', Validators.required],
-    //   apellidoPaterno: ['A Materno', Validators.required],
-    //   apellidoMaterno: ['A Paterno', Validators.required],
-    //   curp: ['REGM980609HMCYNR0', [Validators.required, Validators.pattern(/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/)]],
-    //   sexo: [1, Validators.required],
-    //   fechaNacimiento: ['1998-06-09', Validators.required],
-    //   oficio: ['PLOMERO', Validators.required],
-    //   edoCivil: ['1', Validators.required],
-    //   numeroTelefono: ['1234567890', Validators.required],
-    //   numeroCelular: ['1234567890', Validators.required],
-    //   email: ['prueba.us@example.com', Validators.required],
-    //   pass: ['', Validators.required],
-    //   nombreContacto: ['Emergencias', Validators.required],
-    //   apellidoContacto: ['ApContacto', Validators.required],
-    //   parentescoContacto: ['Ninguno', Validators.required],
-    //   numeroContacto: ['12345', Validators.required],
-    //   enfermedades: ['Gripe'],
-    //   alergias: ['Penicilina'],
-    //   medicamentos: ['Paracetamol'],
-    //   estatura: ['1.83', Validators.required],
-    //   complexion: [1,Validators.required],
-    //   tipoSangre: [2, Validators.required],
-    //   sSocial: ['0', Validators.required],
-    //   tipoSeguro: [''],
-    //   numeroSeguro: ['']
-    // });
   }
 
   get personaFormControls() { return this.personaForm.controls; }
