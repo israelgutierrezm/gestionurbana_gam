@@ -60,7 +60,7 @@ export class FormComponent implements OnInit {
       numeroTelefono: ['', Validators.required],
       numeroCelular: ['', Validators.required],
       email: ['', Validators.required],
-      pass: [''],
+      pass: ['password'],
       nombreContacto: ['', Validators.required],
       apellidoContacto: ['', Validators.required],
       parentescoContacto: ['', Validators.required],
@@ -277,6 +277,9 @@ export class FormComponent implements OnInit {
     if (this.personaForm.invalid) {
       Object.keys(this.personaForm.controls).forEach(controlKey => {
         this.personaForm.controls[controlKey].markAsTouched();
+        if(this.personaForm.controls[controlKey].invalid){
+          console.log(this.personaForm.controls[controlKey]);
+        }
       });
       return;
     }

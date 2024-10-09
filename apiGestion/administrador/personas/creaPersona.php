@@ -42,8 +42,8 @@ try {
             'medicamentos' => $medicamentos,
             'tipoSangre' => $tipoSangre,
             'sSocial' => $sSocial,
-            'tipoSeguro' => isset($tipoSeguro) ? $tipoSeguro : 'NULL',
-            'numeroSeguro' => isset($numeroSeguro) ? $numeroSeguro : 'NULL'
+            'tipoSeguro' => isset($tipoSeguro) && $tipoSeguro != '' ? $tipoSeguro : 'NULL',
+            'numeroSeguro' => isset($numeroSeguro) && $numeroSeguro != '' ? $numeroSeguro : 'NULL'
         ];
 
         $json = $personaClass->creaPersona($datosUsuario);
