@@ -5,7 +5,7 @@
  * 2013
  */
 
-$GLOBALS['produccion'] = 0;
+$GLOBALS['produccion'] = 1;
 $connection = null;
 
 if ($GLOBALS['produccion'] == 1) {
