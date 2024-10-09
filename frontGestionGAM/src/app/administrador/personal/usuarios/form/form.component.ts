@@ -287,7 +287,7 @@ export class FormComponent implements OnInit {
       next: (response: any) => {
         if (response && response['estatus']) {
           this._toast.show(response['msg'], { classname: 'bg-success' });
-          this.router.navigate(['/admin/personal/consulta-usuarios']);
+          this.router.navigate(['/admin/personal/consulta-trabajadores']);
         } else {
           this._toast.show(response['Error al guardar'], { classname: 'bg-danger' });
         }
