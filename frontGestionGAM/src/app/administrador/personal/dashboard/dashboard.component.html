@@ -35,12 +35,18 @@
                 <img class="img-fluid" src="https://static.vecteezy.com/system/resources/previews/014/471/619/non_2x/supervisor-construction-icon-cartoon-style-vector.jpg" alt="Supervisores"  style="min-height: 180px;max-height: 240px;" />
             </div>
             <figcaption>
-                <div class="btn_add_trabajador border" [routerLink]="['../crea/4']" title="Agregar supervisor">
+                <!--
+                       <div class="btn_add_trabajador border" [routerLink]="['../crea/4']" title="Agregar supervisor">
                     <span class="a_add_trabajador">+</span>
                 </div>
+                -->
+         
                 <h5><b>Supervisores</b></h5>
-                
-                <p [routerLink]="['../consulta-supervisores']" class="a-link-consultar"><b>Consultar todos</b></p>
+                <!--
+                                <p [routerLink]="['../consulta-supervisores']" class="a-link-consultar"><b>Consultar todos</b></p>
+
+                -->
+                <p onclick="alert('No tienes los privilegios suficientes')" class="a-link-consultar"><b>Consultar todos</b></p>
             </figcaption>
             <a href="#"></a>
         </figure>

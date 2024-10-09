@@ -59,7 +59,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/system/"
             },
             "development": {
               "buildOptimizer": false,

@@ -42,6 +42,7 @@ export class SidebarComponent implements OnInit {
       icon: 'fa fa-users',
       label: 'Usuarios'
     },
+    /*
     {
       routeLink: 'frentes/consulta',
       icon: 'fa-solid fa-route',
@@ -61,7 +62,7 @@ export class SidebarComponent implements OnInit {
       routeLink: 'reportes',
       icon: 'fa-solid fa-chart-simple',
       label: 'Reportes',
-    },
+    },*/
     {
       routeLink: '',
       icon: 'fa fa-sign-out',
