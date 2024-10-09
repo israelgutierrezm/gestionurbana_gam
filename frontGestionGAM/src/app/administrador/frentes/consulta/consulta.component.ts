@@ -60,7 +60,7 @@ export class ConsultaComponent implements OnInit {
   }
 
   filtrarFrentes() {
-    console.warn(this.nombreBusqueda);
+    console.log(this.nombreBusqueda);
     if (this.nombreBusqueda) {
       const nombreBusquedaLower = this.nombreBusqueda.toLowerCase();
       this.frentesFiltrados = this.arrayFrentes.filter(frente =>

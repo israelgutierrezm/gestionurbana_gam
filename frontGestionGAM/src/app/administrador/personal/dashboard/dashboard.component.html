@@ -1,12 +1,60 @@
-<div class="row">
+<div class="row pb-3">
     <div class="col-md-12">
-        <h4>Gestión de personal</h4>
+        <h4>Usuarios</h4>
     </div>
 </div>
-<div class="row">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a  [routerLink]="['../home']">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+    </ol>
+  </nav>
+
+<div class="row" >
+    <div class="col-sm-6 pt-3">
+        <div class="carta_opcion rounded border">
+            <div class="image">
+                <img class="img-fluid" src="https://png.pngtree.com/png-clipart/20230502/original/pngtree-worker-labor-cartoon-png-image_9135103.png" alt="Trabajadores" style="min-height: 180px;max-height: 240px;" />
+            </div>
+            <figcaption>
+                <div class="btn_add_trabajador border" [routerLink]="['../crea/2']" title="Agregar trabajador">
+                    <span class="a_add_trabajador">+</span>
+                </div>
+                <h5><b>Trabajadores</b>
+                
+                </h5>
+                <p [routerLink]="['../consulta-trabajadores']" class="a-link-consultar"><b>Consultar todos</b></p>
+            </figcaption>
+            <a href="#"></a>
+        </div>
+    </div>
+
+    <div class="col-sm-6 pt-3">
+        <figure class="carta_opcion rounded border">
+            <div class="image">
+                <img class="img-fluid" src="https://static.vecteezy.com/system/resources/previews/014/471/619/non_2x/supervisor-construction-icon-cartoon-style-vector.jpg" alt="Supervisores"  style="min-height: 180px;max-height: 240px;" />
+            </div>
+            <figcaption>
+                <div class="btn_add_trabajador border" [routerLink]="['../crea/4']" title="Agregar supervisor">
+                    <span class="a_add_trabajador">+</span>
+                </div>
+                <h5><b>Supervisores</b></h5>
+                
+                <p [routerLink]="['../consulta-supervisores']" class="a-link-consultar"><b>Consultar todos</b></p>
+            </figcaption>
+            <a href="#"></a>
+        </figure>
+    </div>
+</div>
+
+  <!--
+
+<div class="row px-2">
     <div class="col-md-12">
+    
         <div class="row">
-            <div class="col-md-4">
+    
+                        <div class="col-md-4">
                 <div class="card text-white bg-secondary mt-3" [routerLink]="['../consulta-usuarios']">
                     <div class="card-header"><strong>Consulta usuarios<i class="fa-solid fa-people-group float-end"></i></strong></div>
                     <div class="card-body">
@@ -22,21 +70,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-secondary mt-3" [routerLink]="['../consulta-supervisores']">
-                    <div class="card-header"><strong>Supervisores</strong><i class="fa-solid fa-id-card-clip float-end"></i></div>
-                    <div class="card-body">
-                        <p class="card-text">Consulta la información de los supervisores.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-secondary mt-3" [routerLink]="['../consulta-trabajadores']">
+          
+            <div class="col-md-6">
+                <div class="card text-white bg-success mt-3" [routerLink]="['../consulta-trabajadores']">
                     <div class="card-header"><strong>Trabajadores</strong><i class="fa-solid fa-id-card-clip float-end"></i></div>
                     <div class="card-body">
                         <p class="card-text">Consulta la información de los trabajadores.</p>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-success mt-3" [routerLink]="['../consulta-supervisores']">
+                    <div class="card-header"><strong>Supervisores</strong><i class="fa-solid fa-id-card-clip float-end"></i></div>
+                    <div class="card-body">
+                        <p class="card-text">Consulta la información de los supervisores.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+      -->
