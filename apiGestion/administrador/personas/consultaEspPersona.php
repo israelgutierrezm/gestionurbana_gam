@@ -11,7 +11,7 @@ try {
         include './class/personas.class.php';
         $personasClass = new Personas();
         $arregloUsuario = $personasClass->consultaEspPersona($usuarioId);
-        if(sizeof($arregloUsuario) > 0){
+        if($arregloUsuario && sizeof($arregloUsuario) > 0){
             $json = array("estatus" => 1, "msg" => "Se encontró información", "usuario" => $arregloUsuario);
         }else{
             $json = array("estatus" => 0, "msg" => "No se encontró información");

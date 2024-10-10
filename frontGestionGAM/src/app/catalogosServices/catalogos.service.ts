@@ -46,4 +46,8 @@ export class CatalogosService {
     return this._httpClient.get(this.url +'catalogos/catTiposSeguros.php');
   }
 
+  getDirecciones(){
+    return this._httpClient.get(this.url +'catalogos/catDireccion.php');
+  }
+
 }

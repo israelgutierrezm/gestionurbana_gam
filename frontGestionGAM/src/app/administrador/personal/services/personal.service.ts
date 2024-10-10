@@ -61,6 +61,9 @@ export class PersonalService {
     formData.append('sSocial', form.get('sSocial')?.value);
     formData.append('tipoSeguro', form.get('tipoSeguro')?.value);
     formData.append('numeroSeguro', form.get('numeroSeguro')?.value);
+    formData.append('direccion', form.get('direccion')?.value);
+    formData.append('area', form.get('area')?.value);
+    formData.append('funcion', form.get('funcion')?.value);
     if(form.get('pass')?.value != ''){
       formData.append('pass', form.get('pass')?.value);
     }

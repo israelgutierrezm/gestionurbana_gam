@@ -29,12 +29,12 @@ class Personas
         $persona = arreglo(query('SELECT u.usuario_id, u.nombre, u.ap_pat, u.ap_mat, u.curp, u.email, u.telefono, u.celular, u.fecha_nacimiento, u.cat_genero_id,
         ur.cat_rol_id, ude.nombre AS nombre_contacto, ude.apellido_paterno AS apellido_contacto, ude.telefono AS telefono_contacto,
         ude.celular AS celular_contacto, ude.parentesco, udm.tipo_sangre, udm.alergias, udm.medicamentos, udm.condiciones_preexistentes, u.url_foto, udm.seguro_social,
-        udm.complexion_id, udm.estatura, u.estado_civil_id, u.oficio, udm.tipo_seguro_id, udm.numero_seguro
+        udm.complexion_id, udm.estatura, u.estado_civil_id, u.oficio, udm.tipo_seguro_id, udm.numero_seguro, u.oficio, u.area, u.funcion, u.direccion_id
         FROM usuario u 
         JOIN usuario_rol ur on ur.usuario_id = u.usuario_id
         JOIN usuario_datos_emergencia ude on ude.usuario_id = u.usuario_id
         JOIN usuario_datos_medicos udm on udm.usuario_id = u.usuario_id
-        WHERE u.estatus = 1 AND ur.estatus = 1 AND u.usuario_id =' . $usuarioId));
+        WHERE u.estatus = 1 AND ur.estatus = 1 AND u.usuario_id =' . $usuarioId.''));
         return $persona;
     }
 
@@ -49,6 +49,9 @@ class Personas
             cat_genero_id = "' . $datosUsuario['generoId'] . '",
             fecha_nacimiento = "' . $datosUsuario['fechaNacimiento'] . '",
             oficio = "' . $datosUsuario['oficio'] . '",
+            area = "' . $datosUsuario['area'] . '",
+            funcion = "' . $datosUsuario['funcion'] . '",
+            direccion_id = "' . $datosUsuario['direccionId'] . '",
             estado_civil_id = "' . $datosUsuario['edoCivil'] . '",
             telefono = "' . $datosUsuario['numeroTelefono'] . '",
             celular = "' . $datosUsuario['numeroCelular'] . '",
@@ -97,6 +100,9 @@ class Personas
         celular,
         fecha_nacimiento,
         oficio,
+        area,
+        direccion_id,
+        funcion,
         estado_civil_id,
         url_foto,
         cat_genero_id,
@@ -113,6 +119,9 @@ class Personas
         ' . $datosUsuario['numeroCelular'] . ',
         "' . $datosUsuario['fechaNacimiento'] . '",
         "' . $datosUsuario['oficio'] . '",
+        "' . $datosUsuario['area'] . '",
+        "' . $datosUsuario['direccionId'] . '",
+        "' . $datosUsuario['funcion'] . '",
         "' . $datosUsuario['edoCivil'] . '",
         "",
         ' . $datosUsuario['generoId'] . ',
@@ -120,24 +129,36 @@ class Personas
         1');
         if ($usuarioId) {
             $insertaUsuarioRol = inserta('usuario_rol', 'usuario_id, cat_rol_id, estatus', '' . $usuarioId . ', ' . $datosUsuario['rolId'] . ',1');
-            if($datosUsuario['rolId'] == 1)
-            $insertaTrabajador = inserta(
-                'tr_administrador', 
-                'usuario_id, clave_administrador, estatus', 
-                $usuarioId . ', "A' . $usuarioId . '", 1'
-            );
-            if($datosUsuario['rolId'] == 2)
+            if($datosUsuario['rolId'] == 1){
+                $clave = 'T'.$usuarioId;
+
+                $insertaTrabajador = inserta(
+                    'tr_administrador', 
+                    'usuario_id, clave_administrador, estatus', 
+                    $usuarioId . ', "' . $clave . '", 1'
+                );
+            }
+            if($datosUsuario['rolId'] == 2){
+                $clave = 'T'.$usuarioId;
                 $insertaTrabajador = inserta(
                     'tr_trabajador', 
                     'usuario_id, clave_trabajador, fecha_ingreso, estatus', 
-                    $usuarioId . ', "T' . $usuarioId . '", NOW(), 1'
+                    $usuarioId . ', "' . $clave . '", NOW(), 1'
                 );
-            if($datosUsuario['rolId'] == 3)
+
+            }
+            if($datosUsuario['rolId'] == 3){
+                $clave = 'S'.$usuarioId;
                 $insertaTrabajador = inserta(
                     'tr_supervisor', 
                     'usuario_id, clave_supervisor, estatus', 
-                    $usuarioId . ', "S' . $usuarioId . '", 1'
+                    $usuarioId . ', "' . $clave . '", 1'
                 );
+            }
+
+            if($datosUsuario['email'] == 'NULL'){
+                $this->editaUsuarioSinCorreo($usuarioId, $clave);
+            }
             $responseInsertaDatosMedicos = $this->insertaDatosMedicos($usuarioId, $datosUsuario);
             if ($responseInsertaDatosMedicos) {
                 $responseInsertaDatosEmergencia = $this->insertaDatosEmergencia($usuarioId, $datosUsuario);
@@ -148,6 +169,10 @@ class Personas
         } else {
             return array("estatus" => 0, "msg" => "Error al guardar los datos del usuario");
         }
+    }
+
+    private function editaUsuarioSinCorreo($usuario_id, $clave){
+        $edita = update('usuario','usuario="'.$clave.'"','usuario_id='.$usuario_id);
     }
 
     private function insertaDatosMedicos($usuarioId, $datosUsuario)

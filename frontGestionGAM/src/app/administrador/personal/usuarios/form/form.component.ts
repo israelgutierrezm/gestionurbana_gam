@@ -25,6 +25,7 @@ export class FormComponent implements OnInit {
   arregloComplexiones: Array<any> = [];
   arregloEdosCiviles: Array<any> = [];
   arregloSeguros: Array<any> = [];
+  arregloDirecciones: Array<any> = [];
   usuarioId: string | null;
   rolId: string | null;
   imagen: File | null = null;
@@ -34,6 +35,9 @@ export class FormComponent implements OnInit {
 
   errorCurp: string = 'Ingresa una CURP válida'; 
   errorEmail: string = 'Ingresa un correo electrónico válido'; 
+
+  controlLabels: { [key: string]: string } = {};
+
 
 
   constructor(
@@ -56,10 +60,13 @@ export class FormComponent implements OnInit {
       sexo: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
       oficio: ['', Validators.required],
+      area: ['', Validators.required],
+      direccion: ['', Validators.required],
+      funcion: ['', Validators.required],
       edoCivil: ['', Validators.required],
       numeroTelefono: ['', Validators.required],
       numeroCelular: ['', Validators.required],
-      email: ['', Validators.required],
+      email: [''],
       pass: ['password'],
       nombreContacto: ['', Validators.required],
       apellidoContacto: ['', Validators.required],
@@ -103,10 +110,43 @@ export class FormComponent implements OnInit {
     this.consultaCatComplexion();
     this.consultaCatEdosCiviles();
     this.consultaCatTipoSeguros();
+    this.consultaCatDirecciones();
 
     this.personaForm.get('sSocial')?.valueChanges.subscribe(sSocialValor => {
       this.changeValidators(sSocialValor);
     });
+
+    this.controlLabels = {
+      rol: 'Rol',
+      nombre: 'Nombre',
+      apellidoPaterno: 'Apellido Paterno',
+      apellidoMaterno: 'Apellido Materno',
+      curp: 'CURP',
+      sexo: 'Sexo',
+      fechaNacimiento: 'Fecha de Nacimiento',
+      oficio: 'Oficio',
+      area: 'Área',
+      direccion: 'Dirección',
+      funcion: 'Función',
+      edoCivil: 'Estado Civil',
+      numeroTelefono: 'Número de Teléfono',
+      numeroCelular: 'Número de Celular',
+      email: 'Correo Electrónico',
+      pass: 'Contraseña',
+      nombreContacto: 'Nombre de Contacto',
+      apellidoContacto: 'Apellido de Contacto',
+      parentescoContacto: 'Parentesco de Contacto',
+      numeroContacto: 'Número de Contacto',
+      enfermedades: 'Enfermedades',
+      alergias: 'Alergias',
+      medicamentos: 'Medicamentos',
+      estatura: 'Estatura',
+      complexion: 'Complexión',
+      tipoSangre: 'Tipo de Sangre',
+      sSocial: 'Seguro Social',
+      tipoSeguro: 'Tipo de Seguro',
+      numeroSeguro: 'Número de Seguro'
+    };
   }
 
   getSexo() {
@@ -170,6 +210,16 @@ export class FormComponent implements OnInit {
       next: (response: any) => {
         if (response && response['estatus']) {
           this.tiposSangre = response['catalogo'];
+        }
+      }
+    });
+  }
+
+  consultaCatDirecciones() {
+    this._catalogoService.getDirecciones().subscribe({
+      next: (response: any) => {
+        if (response && response['estatus']) {
+          this.arregloDirecciones = response['catalogo'];
         }
       }
     });
@@ -244,11 +294,14 @@ export class FormComponent implements OnInit {
     this.personaForm.get('curp')?.setValue(this.usuarioList?.curp);
     this.personaForm.get('sexo')?.setValue(this.usuarioList?.cat_genero_id);
     this.personaForm.get('fechaNacimiento')?.setValue(this.usuarioList?.fecha_nacimiento);
+    this.personaForm.get('funcion')?.setValue(this.usuarioList?.funcion);
     this.personaForm.get('oficio')?.setValue(this.usuarioList?.oficio);
+    this.personaForm.get('area')?.setValue(this.usuarioList?.area);
+    this.personaForm.get('direccion')?.setValue(this.usuarioList?.direccion_id);
     this.personaForm.get('edoCivil')?.setValue(this.usuarioList?.estado_civil_id);
     this.personaForm.get('numeroTelefono')?.setValue(this.usuarioList?.telefono);
     this.personaForm.get('numeroCelular')?.setValue(this.usuarioList?.celular);
-    this.personaForm.get('email')?.setValue(this.usuarioList?.email);
+    this.personaForm.get('email')?.setValue(this.usuarioList?.email != 'NULL' ? this.usuarioList?.email : '');
     this.personaForm.get('nombreContacto')?.setValue(this.usuarioList?.nombre_contacto);
     this.personaForm.get('apellidoContacto')?.setValue(this.usuarioList?.apellido_contacto);
     this.personaForm.get('parentescoContacto')?.setValue(this.usuarioList?.parentesco);
@@ -278,9 +331,9 @@ export class FormComponent implements OnInit {
       Object.keys(this.personaForm.controls).forEach(controlKey => {
         this.personaForm.controls[controlKey].markAsTouched();
         if(this.personaForm.controls[controlKey].invalid){
-          console.log(this.personaForm.controls[controlKey]);
         }
       });
+      this.findInvalidControls();
       return;
     }
     this._personalService.guardaPersona(this.personaForm, this.usuarioId, this.imagen).subscribe({
@@ -293,6 +346,17 @@ export class FormComponent implements OnInit {
         }
       }
     });
+  }
+
+  findInvalidControls() {
+    // const invalidControls = [];
+    const controls = this.personaForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        this._toast.show('Falta el dato: '+this.controlLabels[name], { classname: 'bg-danger' });
+        return;
+      }
+    }
   }
 
   onImagenFileChange(file: File | null) {

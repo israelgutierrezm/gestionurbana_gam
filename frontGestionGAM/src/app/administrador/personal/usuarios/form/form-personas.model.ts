@@ -9,6 +9,9 @@ export interface UsuarioForm {
     celular: string;
     fecha_nacimiento: string;
     oficio: string;
+    area: string;
+    funcion: string;
+    direccion_id: string;
     estado_civil_id: string;
     cat_genero_id: string;
     cat_rol_id: string;

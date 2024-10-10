@@ -16,6 +16,8 @@ try {
         include './class/personas.class.php';
         $personaClass = new Personas();
 
+
+
         $datosUsuario = [
             'rolId' => $rolId,
             'img' => isset($img) ? $img : NULL,
@@ -26,10 +28,13 @@ try {
             'generoId' => $generoId,
             'fechaNacimiento' => $fechaNacimiento,
             'oficio' => $oficio,
+            'area' => $area,
+            'direccionId' => $direccion,
+            'funcion' => $funcion,
             'edoCivil' => $edoCivil,
             'numeroTelefono' => $numeroTelefono,
             'numeroCelular' => $numeroCelular,
-            'email' => $email,
+            'email' => isset($email) && $email != '' ? $email : 'NULL',
             'pass' => $pass,
             'nombreContacto' => $nombreContacto,
             'apellidoContacto' => $apellidoContacto,
