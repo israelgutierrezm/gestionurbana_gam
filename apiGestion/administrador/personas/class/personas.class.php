@@ -90,7 +90,7 @@ class Personas
     {
         $usuarioId = inserta_last_id('usuario', '
         usuario,
-        contraseña,
+        contrasena,
         nombre,
         ap_pat,
         ap_mat, 
@@ -162,7 +162,9 @@ class Personas
             $responseInsertaDatosMedicos = $this->insertaDatosMedicos($usuarioId, $datosUsuario);
             if ($responseInsertaDatosMedicos) {
                 $responseInsertaDatosEmergencia = $this->insertaDatosEmergencia($usuarioId, $datosUsuario);
-                return $responseInsertaDatosEmergencia;
+                //return $responseInsertaDatosEmergencia;
+                return array("estatus" => 1, "msg" => "Se guardó la información correctamente.", "usuarioId"=> $usuarioId);
+
             } else {
                 return array("estatus" => 0, "msg" => "Error al guardar los datos médicos");
             }
