@@ -26,7 +26,7 @@ class Personas
 
     public function consultaEspPersona($usuarioId)
     {
-        $persona = arreglo(query('SELECT u.usuario_id, u.nombre, u.ap_pat, u.ap_mat, u.curp, u.email, u.telefono, u.celular, u.fecha_nacimiento, u.cat_genero_id,
+        $persona = arreglo(query('SELECT u.usuario_id, u.usuario, u.nombre, u.ap_pat, u.ap_mat, u.curp, u.email, u.telefono, u.celular, u.fecha_nacimiento, u.cat_genero_id,
         ur.cat_rol_id, ude.nombre AS nombre_contacto, ude.apellido_paterno AS apellido_contacto, ude.telefono AS telefono_contacto,
         ude.celular AS celular_contacto, ude.parentesco, udm.tipo_sangre, udm.alergias, udm.medicamentos, udm.condiciones_preexistentes, u.url_foto, udm.seguro_social,
         udm.complexion_id, udm.estatura, u.estado_civil_id, u.oficio, udm.tipo_seguro_id, udm.numero_seguro, u.oficio, u.area, u.funcion, u.direccion_id
@@ -227,7 +227,7 @@ class Personas
         }
     }
 
-    private function encriptaPassword($pass)
+    public function encriptaPassword($pass)
     {
         include '../../extras/encriptacion/class/encriptacion.class.php';
         $encriptacionClass = new Encriptacion();

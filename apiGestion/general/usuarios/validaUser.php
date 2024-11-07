@@ -1,4 +1,7 @@
 <?php
+
+use Firebase\JWT\JWT;
+
 include '../../headers.php';
 include '../../jwt.php';
 
@@ -45,15 +48,18 @@ function getRolesUsuarioValido($usuario, $pass)
 
 function getRoles($usuarioId)
 {
-    $queryRoles = query('SELECT cr.cat_rol_id, cr.rol FROM usuario_rol ur
+    $queryRoles = query('SELECT cr.cat_rol_id AS rol_id, cr.rol FROM usuario_rol ur
     JOIN cat_rol cr ON cr.cat_rol_id = ur.cat_rol_id
     WHERE ur.estatus = 1 AND cr.estatus = 1 AND ur.usuario_id =' . $usuarioId.'');
 
     if (num($queryRoles)) {
-        while ($rol = arreglo($queryRoles)) {
-            $arregloRoles[] = $rol;
-        }
-        $response = array("estatus" => 1, "msg" => "Se encontraron roles", "roles" => $arregloRoles);
+        $arregloRoles = arreglo($queryRoles);
+        include '../../administrador/personas/class/personas.class.php';
+        $personaClass = new Personas();
+        $arregloPersona = $personaClass->consultaEspPersona($usuarioId);
+        $arregloPersona['rol_id'] = $arregloRoles['rol_id'];
+        $jwt = Auth::SignIn($arregloPersona);
+        $response = array("estatus" => 1, "msg" => "Se encontraron roles", "roles" => $arregloRoles, "jwt" => $jwt);
     }else{
         $response = array("estatus" => 0, "msg" => "No se encontraron roles de este usuario");
     }

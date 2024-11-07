@@ -3,13 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { FrentesComponent } from './frentes.component';
 
 import { ConsultaComponent } from './consulta/consulta.component';
+import { adminGuard } from 'src/app/guards/admin.guard';
 
 const routes: Routes = [
   {
     path: '', component: FrentesComponent,
     children:[
       { path: '', redirectTo: 'consulta', pathMatch: 'full' },
-      { path: 'consulta', component: ConsultaComponent },
+      { path: 'consulta', component: ConsultaComponent,canActivate: [adminGuard] },
 
     ]
   }

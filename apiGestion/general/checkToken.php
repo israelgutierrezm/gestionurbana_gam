@@ -6,21 +6,14 @@ try {
   foreach($_GET as $clave => $valor){
     ${$clave} = $valor;
   }
-
-
-  $token = Auth::Check($jwt);
-    $info_token = Auth::GetData(
+  
+    $jwt = substr($jwt, 1, -1);
+    $info_token = Auth::getDataJWT(
             $jwt  
         );
-        // print_r($usuario);
-  
-    $json = array("status" => 1, "msg" =>'Active Token', "jwt"=> $info_token);
-  
-    /* Output header */
+    $json = array("estatus" => 1, "msg" =>'Active Token', "usuario"=> $info_token);
     	echo json_encode($json);
-
 } catch (Exception $e) {
-    $json = array("status" => 0, "msg" => $e->getMessage());
-    /* Output header */
+    $json = array("estatus" => 0, "msg" => $e->getMessage());
     echo json_encode($json);
 }

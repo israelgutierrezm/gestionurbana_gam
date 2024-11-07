@@ -8,14 +8,10 @@ try {
         foreach ($_GET as $clave => $valor) {
             ${$clave} = escape_cara($valor);
         }
-        include './class/personas.class.php';
+        include '../../administrador/personas/class/personas.class.php';
         $personasClass = new Personas();
-        $arregloPersonas = $personasClass->consultaGeneralPersonas();
-        if(sizeof($arregloPersonas) > 0){
-            $json = array("estatus" => 1, "msg" => "Se encontraron personas", "personas" => $arregloPersonas);
-        }else{
-            $json = array("estatus" => 0, "msg" => "No se encontró información");
-        }
+        $pass = $personasClass->encriptaPassword($pass);
+        echo $pass;
     } else {
         $json = array("estatus" => 0, "msg" => "Método no aceptado");
     }

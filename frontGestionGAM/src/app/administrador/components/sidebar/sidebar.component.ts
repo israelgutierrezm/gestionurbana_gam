@@ -88,8 +88,7 @@ export class SidebarComponent implements OnInit {
   }
 
   cerrarSesion() {
+    localStorage.clear();
     this.router.navigate(['login']);
-    console.log('Sesión cerrada');
-
   }
 }
